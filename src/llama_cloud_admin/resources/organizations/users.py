@@ -25,7 +25,7 @@ from ...types.organizations import (
 )
 from ...types.user_organization_role import UserOrganizationRole
 from ...types.organizations.user_add_response import UserAddResponse
-from ...types.organizations.user_list_response import UserListResponse
+from ...types.organizations.user_list_members_response import UserListMembersResponse
 from ...types.organizations.user_list_projects_response import UserListProjectsResponse
 
 __all__ = ["UsersResource", "AsyncUsersResource"]
@@ -50,39 +50,6 @@ class UsersResource(SyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#with_streaming_response
         """
         return UsersResourceWithStreamingResponse(self)
-
-    def list(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserListResponse:
-        """
-        Get all users in an organization.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        return self._get(
-            path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserListResponse,
-        )
 
     def delete(
         self,
@@ -261,6 +228,39 @@ class UsersResource(SyncAPIResource):
             cast_to=UserOrganizationRole,
         )
 
+    def list_members(
+        self,
+        organization_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserListMembersResponse:
+        """
+        Get all users in an organization.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        return self._get(
+            path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserListMembersResponse,
+        )
+
     def list_projects(
         self,
         user_id: str,
@@ -403,39 +403,6 @@ class AsyncUsersResource(AsyncAPIResource):
         For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#with_streaming_response
         """
         return AsyncUsersResourceWithStreamingResponse(self)
-
-    async def list(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserListResponse:
-        """
-        Get all users in an organization.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
-        return await self._get(
-            path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=UserListResponse,
-        )
 
     async def delete(
         self,
@@ -616,6 +583,39 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserOrganizationRole,
         )
 
+    async def list_members(
+        self,
+        organization_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> UserListMembersResponse:
+        """
+        Get all users in an organization.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        return await self._get(
+            path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=UserListMembersResponse,
+        )
+
     async def list_projects(
         self,
         user_id: str,
@@ -745,9 +745,6 @@ class UsersResourceWithRawResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
 
-        self.list = to_raw_response_wrapper(
-            users.list,
-        )
         self.delete = to_raw_response_wrapper(
             users.delete,
         )
@@ -759,6 +756,9 @@ class UsersResourceWithRawResponse:
         )
         self.assign_role = to_raw_response_wrapper(
             users.assign_role,
+        )
+        self.list_members = to_raw_response_wrapper(
+            users.list_members,
         )
         self.list_projects = to_raw_response_wrapper(
             users.list_projects,
@@ -775,9 +775,6 @@ class AsyncUsersResourceWithRawResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
 
-        self.list = async_to_raw_response_wrapper(
-            users.list,
-        )
         self.delete = async_to_raw_response_wrapper(
             users.delete,
         )
@@ -789,6 +786,9 @@ class AsyncUsersResourceWithRawResponse:
         )
         self.assign_role = async_to_raw_response_wrapper(
             users.assign_role,
+        )
+        self.list_members = async_to_raw_response_wrapper(
+            users.list_members,
         )
         self.list_projects = async_to_raw_response_wrapper(
             users.list_projects,
@@ -805,9 +805,6 @@ class UsersResourceWithStreamingResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
 
-        self.list = to_streamed_response_wrapper(
-            users.list,
-        )
         self.delete = to_streamed_response_wrapper(
             users.delete,
         )
@@ -819,6 +816,9 @@ class UsersResourceWithStreamingResponse:
         )
         self.assign_role = to_streamed_response_wrapper(
             users.assign_role,
+        )
+        self.list_members = to_streamed_response_wrapper(
+            users.list_members,
         )
         self.list_projects = to_streamed_response_wrapper(
             users.list_projects,
@@ -835,9 +835,6 @@ class AsyncUsersResourceWithStreamingResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
 
-        self.list = async_to_streamed_response_wrapper(
-            users.list,
-        )
         self.delete = async_to_streamed_response_wrapper(
             users.delete,
         )
@@ -849,6 +846,9 @@ class AsyncUsersResourceWithStreamingResponse:
         )
         self.assign_role = async_to_streamed_response_wrapper(
             users.assign_role,
+        )
+        self.list_members = async_to_streamed_response_wrapper(
+            users.list_members,
         )
         self.list_projects = async_to_streamed_response_wrapper(
             users.list_projects,

@@ -32,7 +32,7 @@ client = LlamaCloudAdmin(
     api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
-organization_members = client.organizations.users.list(
+organization_members = client.organizations.users.list_members(
     "my-organization-id",
 )
 ```
@@ -57,7 +57,7 @@ client = AsyncLlamaCloudAdmin(
 
 
 async def main() -> None:
-    organization_members = await client.organizations.users.list(
+    organization_members = await client.organizations.users.list_members(
         "my-organization-id",
     )
 
@@ -92,7 +92,7 @@ async def main() -> None:
         api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        organization_members = await client.organizations.users.list(
+        organization_members = await client.organizations.users.list_members(
             "my-organization-id",
         )
 
