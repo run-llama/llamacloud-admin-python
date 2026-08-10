@@ -20,19 +20,19 @@ Types:
 
 ```python
 from llama_cloud_admin.types.organizations import (
-    UserListResponse,
     UserAddResponse,
+    UserListMembersResponse,
     UserListProjectsResponse,
 )
 ```
 
 Methods:
 
-- <code title="get /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list</a>(organization_id) -> <a href="./src/llama_cloud_admin/types/organizations/user_list_response.py">UserListResponse</a></code>
 - <code title="delete /api/v1/organizations/{organization_id}/users/{member_user_id}">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">delete</a>(member_user_id, \*, organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_delete_params.py">params</a>) -> None</code>
 - <code title="put /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">add</a>(organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_add_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/organizations/user_add_response.py">UserAddResponse</a></code>
 - <code title="put /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">add_to_project</a>(user_id, \*, organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_add_to_project_params.py">params</a>) -> object</code>
 - <code title="put /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">assign_role</a>(path_organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_assign_role_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/user_organization_role.py">UserOrganizationRole</a></code>
+- <code title="get /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list_members</a>(organization_id) -> <a href="./src/llama_cloud_admin/types/organizations/user_list_members_response.py">UserListMembersResponse</a></code>
 - <code title="get /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list_projects</a>(user_id, \*, organization_id) -> <a href="./src/llama_cloud_admin/types/organizations/user_list_projects_response.py">UserListProjectsResponse</a></code>
 - <code title="get /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list_roles</a>(organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_list_roles_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/user_organization_role.py">Optional[UserOrganizationRole]</a></code>
 - <code title="delete /api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">remove_from_project</a>(project_id, \*, organization_id, user_id) -> object</code>
