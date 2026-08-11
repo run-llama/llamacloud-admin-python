@@ -11,7 +11,6 @@ from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
 from llama_cloud_admin.types import (
     AdminGetLlmsInfoResponse,
-    AdminGetS3ConfigResponse,
     AdminGetOcrStatusResponse,
     AdminGetLicenseInfoResponse,
     AdminGetFilestoresInfoResponse,
@@ -172,34 +171,6 @@ class TestAdmin:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_get_s3_config(self, client: LlamaCloudAdmin) -> None:
-        admin = client.admin.get_s3_config()
-        assert_matches_type(AdminGetS3ConfigResponse, admin, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_get_s3_config(self, client: LlamaCloudAdmin) -> None:
-        response = client.admin.with_raw_response.get_s3_config()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        admin = response.parse()
-        assert_matches_type(AdminGetS3ConfigResponse, admin, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_get_s3_config(self, client: LlamaCloudAdmin) -> None:
-        with client.admin.with_streaming_response.get_s3_config() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            admin = response.parse()
-            assert_matches_type(AdminGetS3ConfigResponse, admin, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
 
 class TestAsyncAdmin:
     parametrize = pytest.mark.parametrize(
@@ -351,33 +322,5 @@ class TestAsyncAdmin:
 
             admin = await response.parse()
             assert_matches_type(AdminGetOcrStatusResponse, admin, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_get_s3_config(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        admin = await async_client.admin.get_s3_config()
-        assert_matches_type(AdminGetS3ConfigResponse, admin, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_get_s3_config(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        response = await async_client.admin.with_raw_response.get_s3_config()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        admin = await response.parse()
-        assert_matches_type(AdminGetS3ConfigResponse, admin, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_get_s3_config(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        async with async_client.admin.with_streaming_response.get_s3_config() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            admin = await response.parse()
-            assert_matches_type(AdminGetS3ConfigResponse, admin, path=["response"])
 
         assert cast(Any, response.is_closed) is True
