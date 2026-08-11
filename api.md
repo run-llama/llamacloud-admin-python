@@ -41,7 +41,6 @@ Methods:
 - <code title="put /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">assign_role</a>(path_organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_assign_role_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/user_organization_role.py">UserOrganizationRole</a></code>
 - <code title="get /api/v1/organizations/{organization_id}/users">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list_members</a>(organization_id) -> <a href="./src/llama_cloud_admin/types/organizations/user_list_members_response.py">UserListMembersResponse</a></code>
 - <code title="get /api/v1/organizations/{organization_id}/users/{user_id}/projects">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list_projects</a>(user_id, \*, organization_id) -> <a href="./src/llama_cloud_admin/types/organizations/user_list_projects_response.py">UserListProjectsResponse</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/users/roles">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">list_roles</a>(organization_id, \*\*<a href="src/llama_cloud_admin/types/organizations/user_list_roles_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/user_organization_role.py">Optional[UserOrganizationRole]</a></code>
 - <code title="delete /api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}">client.organizations.users.<a href="./src/llama_cloud_admin/resources/organizations/users.py">remove_from_project</a>(project_id, \*, organization_id, user_id) -> object</code>
 
 ## Roles
@@ -82,9 +81,9 @@ from llama_cloud_admin.types import Invite, InviteAcceptResponse
 
 Methods:
 
-- <code title="get /api/v2/invites">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/invite_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/invite.py">SyncPaginatedCursor[Invite]</a></code>
-- <code title="delete /api/v2/invites/{invite_id}">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">delete</a>(invite_id) -> None</code>
 - <code title="post /api/v2/invites/{invite_id}/accept">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">accept</a>(invite_id) -> <a href="./src/llama_cloud_admin/types/invite_accept_response.py">InviteAcceptResponse</a></code>
+- <code title="delete /api/v2/invites/{invite_id}">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">decline</a>(invite_id) -> None</code>
+- <code title="get /api/v2/invites">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">list_mine</a>(\*\*<a href="src/llama_cloud_admin/types/invite_list_mine_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/invite.py">SyncPaginatedCursor[Invite]</a></code>
 
 # Admin
 
@@ -97,7 +96,6 @@ from llama_cloud_admin.types import (
     AdminGetLlamaextractFeaturesResponse,
     AdminGetLlmsInfoResponse,
     AdminGetOcrStatusResponse,
-    AdminGetS3ConfigResponse,
 )
 ```
 
@@ -108,7 +106,6 @@ Methods:
 - <code title="get /api/v1/admin/llamaextract/features">client.admin.<a href="./src/llama_cloud_admin/resources/admin/admin.py">get_llamaextract_features</a>() -> <a href="./src/llama_cloud_admin/types/admin_get_llamaextract_features_response.py">AdminGetLlamaextractFeaturesResponse</a></code>
 - <code title="get /api/v1/admin/llms/info">client.admin.<a href="./src/llama_cloud_admin/resources/admin/admin.py">get_llms_info</a>() -> <a href="./src/llama_cloud_admin/types/admin_get_llms_info_response.py">AdminGetLlmsInfoResponse</a></code>
 - <code title="get /api/v1/admin/ocr/statusz">client.admin.<a href="./src/llama_cloud_admin/resources/admin/admin.py">get_ocr_status</a>() -> <a href="./src/llama_cloud_admin/types/admin_get_ocr_status_response.py">AdminGetOcrStatusResponse</a></code>
-- <code title="get /api/v1/admin/s3/config">client.admin.<a href="./src/llama_cloud_admin/resources/admin/admin.py">get_s3_config</a>() -> <a href="./src/llama_cloud_admin/types/admin_get_s3_config_response.py">AdminGetS3ConfigResponse</a></code>
 
 ## Users
 
@@ -134,4 +131,3 @@ from llama_cloud_admin.types.admin import UsageMetricAggregateResponse
 Methods:
 
 - <code title="get /api/v1/admin/usage-metrics/aggregate">client.admin.usage_metrics.<a href="./src/llama_cloud_admin/resources/admin/usage_metrics.py">aggregate</a>(\*\*<a href="src/llama_cloud_admin/types/admin/usage_metric_aggregate_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/admin/usage_metric_aggregate_response.py">UsageMetricAggregateResponse</a></code>
-- <code title="get /api/v1/admin/usage-metrics/export">client.admin.usage_metrics.<a href="./src/llama_cloud_admin/resources/admin/usage_metrics.py">export</a>(\*\*<a href="src/llama_cloud_admin/types/admin/usage_metric_export_params.py">params</a>) -> None</code>
