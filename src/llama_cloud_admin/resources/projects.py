@@ -12,6 +12,7 @@ from ..types import (
     project_create_params,
     project_delete_params,
     project_update_params,
+    project_get_usage_params,
 )
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
@@ -26,6 +27,7 @@ from .._response import (
 from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.project import Project
+from ..types.project_get_usage_response import ProjectGetUsageResponse
 
 __all__ = ["ProjectsResource", "AsyncProjectsResource"]
 
@@ -255,6 +257,51 @@ class ProjectsResource(SyncAPIResource):
                 query=maybe_transform({"organization_id": organization_id}, project_get_params.ProjectGetParams),
             ),
             cast_to=Project,
+        )
+
+    def get_usage(
+        self,
+        project_id: str,
+        *,
+        get_current_invoice_total: bool | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ProjectGetUsageResponse:
+        """
+        Get usage for a project
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not project_id:
+            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+        return self._get(
+            path_template("/api/v1/projects/{project_id}/usage", project_id=project_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "get_current_invoice_total": get_current_invoice_total,
+                        "organization_id": organization_id,
+                    },
+                    project_get_usage_params.ProjectGetUsageParams,
+                ),
+            ),
+            cast_to=ProjectGetUsageResponse,
         )
 
 
@@ -493,6 +540,51 @@ class AsyncProjectsResource(AsyncAPIResource):
             cast_to=Project,
         )
 
+    async def get_usage(
+        self,
+        project_id: str,
+        *,
+        get_current_invoice_total: bool | Omit = omit,
+        organization_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ProjectGetUsageResponse:
+        """
+        Get usage for a project
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not project_id:
+            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+        return await self._get(
+            path_template("/api/v1/projects/{project_id}/usage", project_id=project_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "get_current_invoice_total": get_current_invoice_total,
+                        "organization_id": organization_id,
+                    },
+                    project_get_usage_params.ProjectGetUsageParams,
+                ),
+            ),
+            cast_to=ProjectGetUsageResponse,
+        )
+
 
 class ProjectsResourceWithRawResponse:
     def __init__(self, projects: ProjectsResource) -> None:
@@ -512,6 +604,9 @@ class ProjectsResourceWithRawResponse:
         )
         self.get = to_raw_response_wrapper(
             projects.get,
+        )
+        self.get_usage = to_raw_response_wrapper(
+            projects.get_usage,
         )
 
 
@@ -534,6 +629,9 @@ class AsyncProjectsResourceWithRawResponse:
         self.get = async_to_raw_response_wrapper(
             projects.get,
         )
+        self.get_usage = async_to_raw_response_wrapper(
+            projects.get_usage,
+        )
 
 
 class ProjectsResourceWithStreamingResponse:
@@ -555,6 +653,9 @@ class ProjectsResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             projects.get,
         )
+        self.get_usage = to_streamed_response_wrapper(
+            projects.get_usage,
+        )
 
 
 class AsyncProjectsResourceWithStreamingResponse:
@@ -575,4 +676,7 @@ class AsyncProjectsResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             projects.get,
+        )
+        self.get_usage = async_to_streamed_response_wrapper(
+            projects.get_usage,
         )

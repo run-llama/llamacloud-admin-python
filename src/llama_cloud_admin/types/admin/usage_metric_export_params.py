@@ -30,7 +30,6 @@ class UsageMetricExportParams(TypedDict, total=False):
                 "directory_files_ingested",
                 "directory_pages_exported",
                 "extraction_num_pages",
-                "extraction_num_pages_parsed",
                 "form_parsing_pages",
                 "image_classified",
                 "index_retrieve_query",
