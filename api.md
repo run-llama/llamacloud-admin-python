@@ -7,8 +7,8 @@ from llama_cloud_admin.types import (
     Organization,
     OrganizationMember,
     Role,
+    UsageAndPlan,
     UserOrganizationRole,
-    OrganizationGetUsageResponse,
 )
 ```
 
@@ -19,7 +19,7 @@ Methods:
 - <code title="get /api/v2/organizations">client.organizations.<a href="./src/llama_cloud_admin/resources/organizations/organizations.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/organization_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/organization.py">SyncPaginatedCursor[Organization]</a></code>
 - <code title="delete /api/v2/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud_admin/resources/organizations/organizations.py">delete</a>(organization_id) -> None</code>
 - <code title="get /api/v2/organizations/{organization_id}">client.organizations.<a href="./src/llama_cloud_admin/resources/organizations/organizations.py">get</a>(organization_id) -> <a href="./src/llama_cloud_admin/types/organization.py">Organization</a></code>
-- <code title="get /api/v1/organizations/{organization_id}/usage">client.organizations.<a href="./src/llama_cloud_admin/resources/organizations/organizations.py">get_usage</a>(organization_id, \*\*<a href="src/llama_cloud_admin/types/organization_get_usage_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/organization_get_usage_response.py">OrganizationGetUsageResponse</a></code>
+- <code title="get /api/v1/organizations/{organization_id}/usage">client.organizations.<a href="./src/llama_cloud_admin/resources/organizations/organizations.py">get_usage</a>(organization_id, \*\*<a href="src/llama_cloud_admin/types/organization_get_usage_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/usage_and_plan.py">UsageAndPlan</a></code>
 
 ## Users
 
@@ -61,7 +61,7 @@ Methods:
 Types:
 
 ```python
-from llama_cloud_admin.types import Project, ProjectGetUsageResponse
+from llama_cloud_admin.types import Project
 ```
 
 Methods:
@@ -71,7 +71,6 @@ Methods:
 - <code title="get /api/v2/projects">client.projects.<a href="./src/llama_cloud_admin/resources/projects.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/project_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/project.py">SyncPaginatedCursor[Project]</a></code>
 - <code title="delete /api/v2/projects/{project_id}">client.projects.<a href="./src/llama_cloud_admin/resources/projects.py">delete</a>(project_id, \*\*<a href="src/llama_cloud_admin/types/project_delete_params.py">params</a>) -> None</code>
 - <code title="get /api/v2/projects/{project_id}">client.projects.<a href="./src/llama_cloud_admin/resources/projects.py">get</a>(project_id, \*\*<a href="src/llama_cloud_admin/types/project_get_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/project.py">Project</a></code>
-- <code title="get /api/v1/projects/{project_id}/usage">client.projects.<a href="./src/llama_cloud_admin/resources/projects.py">get_usage</a>(project_id, \*\*<a href="src/llama_cloud_admin/types/project_get_usage_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/project_get_usage_response.py">ProjectGetUsageResponse</a></code>
 
 # Invites
 
