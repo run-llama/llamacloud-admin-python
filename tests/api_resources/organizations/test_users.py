@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Optional, cast
+from typing import Any, cast
 
 import pytest
 
@@ -338,57 +338,6 @@ class TestUsers:
             client.organizations.users.with_raw_response.list_projects(
                 user_id="",
                 organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_list_roles(self, client: LlamaCloudAdmin) -> None:
-        user = client.organizations.users.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_list_roles_with_all_params(self, client: LlamaCloudAdmin) -> None:
-        user = client.organizations.users.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_list_roles(self, client: LlamaCloudAdmin) -> None:
-        response = client.organizations.users.with_raw_response.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = response.parse()
-        assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_list_roles(self, client: LlamaCloudAdmin) -> None:
-        with client.organizations.users.with_streaming_response.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = response.parse()
-            assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_path_params_list_roles(self, client: LlamaCloudAdmin) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.users.with_raw_response.list_roles(
-                organization_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -777,57 +726,6 @@ class TestAsyncUsers:
             await async_client.organizations.users.with_raw_response.list_projects(
                 user_id="",
                 organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_list_roles(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        user = await async_client.organizations.users.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_list_roles_with_all_params(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        user = await async_client.organizations.users.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-        assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_list_roles(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        response = await async_client.organizations.users.with_raw_response.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        user = await response.parse()
-        assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_list_roles(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        async with async_client.organizations.users.with_streaming_response.list_roles(
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            user = await response.parse()
-            assert_matches_type(Optional[UserOrganizationRole], user, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_path_params_list_roles(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.users.with_raw_response.list_roles(
-                organization_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
