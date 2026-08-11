@@ -7,7 +7,7 @@ from typing_extensions import Literal
 from .._models import BaseModel
 
 __all__ = [
-    "ProjectGetUsageResponse",
+    "UsageAndPlan",
     "Plan",
     "PlanLimits",
     "PlanCurrentBillingPeriod",
@@ -202,7 +202,7 @@ class Usage(BaseModel):
     total_users: Optional[int] = None
 
 
-class ProjectGetUsageResponse(BaseModel):
+class UsageAndPlan(BaseModel):
     plan: Plan
 
     usage: Usage

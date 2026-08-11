@@ -11,7 +11,7 @@ from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
 from llama_cloud_admin.types import (
     Organization,
-    OrganizationGetUsageResponse,
+    UsageAndPlan,
 )
 from llama_cloud_admin.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
@@ -229,7 +229,7 @@ class TestOrganizations:
         organization = client.organizations.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -238,7 +238,7 @@ class TestOrganizations:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             get_current_invoice_total=True,
         )
-        assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -250,7 +250,7 @@ class TestOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = response.parse()
-        assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -262,7 +262,7 @@ class TestOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = response.parse()
-            assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+            assert_matches_type(UsageAndPlan, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -488,7 +488,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -497,7 +497,7 @@ class TestAsyncOrganizations:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             get_current_invoice_total=True,
         )
-        assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -509,7 +509,7 @@ class TestAsyncOrganizations:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         organization = await response.parse()
-        assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -521,7 +521,7 @@ class TestAsyncOrganizations:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             organization = await response.parse()
-            assert_matches_type(OrganizationGetUsageResponse, organization, path=["response"])
+            assert_matches_type(UsageAndPlan, organization, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
