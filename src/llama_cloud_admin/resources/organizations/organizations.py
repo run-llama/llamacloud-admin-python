@@ -41,7 +41,7 @@ from ..._response import (
 from ...pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.organization import Organization
-from ...types.organization_get_usage_response import OrganizationGetUsageResponse
+from ...types.usage_and_plan import UsageAndPlan
 
 __all__ = ["OrganizationsResource", "AsyncOrganizationsResource"]
 
@@ -268,7 +268,7 @@ class OrganizationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationGetUsageResponse:
+    ) -> UsageAndPlan:
         """
         Get usage for a specific organization.
 
@@ -295,7 +295,7 @@ class OrganizationsResource(SyncAPIResource):
                     organization_get_usage_params.OrganizationGetUsageParams,
                 ),
             ),
-            cast_to=OrganizationGetUsageResponse,
+            cast_to=UsageAndPlan,
         )
 
 
@@ -521,7 +521,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> OrganizationGetUsageResponse:
+    ) -> UsageAndPlan:
         """
         Get usage for a specific organization.
 
@@ -548,7 +548,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     organization_get_usage_params.OrganizationGetUsageParams,
                 ),
             ),
-            cast_to=OrganizationGetUsageResponse,
+            cast_to=UsageAndPlan,
         )
 
 
