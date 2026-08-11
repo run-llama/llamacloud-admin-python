@@ -1,8 +1,5 @@
 # Llama Cloud Admin Python API library
 
-<!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/llama_cloud_admin.svg?label=pypi%20(stable))](https://pypi.org/project/llama_cloud_admin/)
-
 The Llama Cloud Admin Python library provides convenient access to the Llama Cloud Admin REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
@@ -16,12 +13,8 @@ The REST API documentation can be found on [developers.llamaindex.ai](https://de
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/run-llama/llamacloud-admin-python.git
+pip install git+https://github.com/run-llama/llamacloud-admin-python.git
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install llama_cloud_admin`
 
 ## Usage
 
@@ -33,6 +26,9 @@ from llama_cloud_admin import LlamaCloudAdmin
 
 client = LlamaCloudAdmin(
     api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
+    # Defaults to https://api.cloud.llamaindex.ai. Self-hosted / BYOC deployments should point this
+    # at their own host, or set the LLAMA_CLOUD_ADMIN_BASE_URL environment variable.
+    # base_url="https://llamacloud.example.com",
 )
 
 organization_members = client.organizations.users.list_members(
@@ -77,8 +73,7 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from this staging repo
-pip install 'llama_cloud_admin[aiohttp] @ git+ssh://git@github.com/run-llama/llamacloud-admin-python.git'
+pip install 'llama_cloud_admin[aiohttp] @ git+https://github.com/run-llama/llamacloud-admin-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -325,8 +320,8 @@ client = LlamaCloudAdmin()
 response = client.organizations.with_raw_response.list()
 print(response.headers.get('X-My-Header'))
 
-organization = response.parse()  # get the object that `organizations.list()` would have returned
-print(organization.id)
+page = response.parse()  # get the object that `organizations.list()` would have returned
+print(page.items)
 ```
 
 These methods return an [`APIResponse`](https://github.com/run-llama/llamacloud-admin-python/tree/main/src/llama_cloud_admin/_response.py) object.
@@ -427,25 +422,23 @@ with LlamaCloudAdmin() as client:
 
 ## Versioning
 
-This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
+This library is distributed only from this Git repository. It is not published to PyPI and has no
+releases, tags, or changelog, so `pip install git+https://...` always installs the current tip of the
+default branch. To pin an exact revision, append a commit SHA:
 
-1. Changes that only affect static types, without breaking runtime behavior.
-2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
-3. Changes that we do not expect to impact the vast majority of users in practice.
+    pip install 'git+https://github.com/run-llama/llamacloud-admin-python.git@<commit-sha>'
 
-We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
+Backwards-incompatible changes can land on the default branch, so pin a SHA if you need a stable surface.
 
 We are keen for your feedback; please open an [issue](https://www.github.com/run-llama/llamacloud-admin-python/issues) with questions, bugs, or suggestions.
 
-### Determining the installed version
+### Determining the installed revision
 
-If you've upgraded to the latest version but aren't seeing any new features you were expecting then your python environment is likely still using an older version.
+`llama_cloud_admin.__version__` is a fixed placeholder (`0.0.1`) and never changes. Because the library
+is installed from git, use pip to see which commit you have:
 
-You can determine the version that is being used at runtime with:
-
-```py
-import llama_cloud_admin
-print(llama_cloud_admin.__version__)
+```sh
+pip freeze | grep llama_cloud_admin
 ```
 
 ## Requirements
