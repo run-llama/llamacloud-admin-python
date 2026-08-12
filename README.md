@@ -8,13 +8,24 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [developers.llamaindex.ai](https://developers.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).
+This library's full surface — 30 endpoints across organizations, projects, invites, roles, and the global-admin operator API — is documented in [api.md](api.md) and in the docstring on each generated method. These admin endpoints are not covered by the public product reference at [developers.llamaindex.ai](https://developers.llamaindex.ai/), so treat `api.md` as the reference.
 
 ## Installation
 
 ```sh
 pip install git+https://github.com/run-llama/llamacloud-admin-python.git
 ```
+
+## Authentication
+
+Authenticate with a `LLAMA_CLOUD_API_KEY` belonging to an **organization admin**. The client reads
+it from the environment by default, or accepts it as the `api_key` keyword argument.
+
+The `client.admin.*` methods wrap the `/api/v1/admin/*` operator API and require a key belonging to
+the deployment's **global admin**; an ordinary organization-admin key gets a 403. (On a self-hosted
+or BYOC deployment, `admin.get_license_info()` and `admin.get_llamaextract_features()` also accept a
+regular BYOC user key.) See
+[global admin configuration](https://developers.llamaindex.ai/llamaparse/self_hosting/configuration/global-admin/).
 
 ## Usage
 
@@ -109,7 +120,10 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Pagination
 
-List methods in the Llama Cloud Admin API are paginated.
+Three methods in this library are paginated: `organizations.list()`, `projects.list()`, and
+`invites.list_mine()`. The remaining list-shaped methods — `organizations.users.list_members()`,
+`organizations.users.list_projects()`, and `organizations.roles.list()` — return every result in a
+single response as a plain list and accept no `page_size`/`page_token`.
 
 This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
@@ -189,9 +203,9 @@ client = LlamaCloudAdmin()
 
 user_claims = client.admin.users.update_claims(
     user_id="user_id",
-    set_claims={},
+    set_claims={"allowed_org_creation": True, "maximum_org_creation": 5},
 )
-print(user_claims.set_claims)
+print(user_claims.claims)
 ```
 
 ## Handling errors
@@ -262,6 +276,8 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
+import httpx
+
 from llama_cloud_admin import LlamaCloudAdmin
 
 # Configure the default for all requests:
