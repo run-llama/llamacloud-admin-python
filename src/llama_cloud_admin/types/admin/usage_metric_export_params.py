@@ -5,20 +5,15 @@ from __future__ import annotations
 from typing import List, Optional
 from typing_extensions import Literal, Required, TypedDict
 
-from ..._types import SequenceNotStr
-
-__all__ = ["UsageMetricAggregateParams"]
+__all__ = ["UsageMetricExportParams"]
 
 
-class UsageMetricAggregateParams(TypedDict, total=False):
+class UsageMetricExportParams(TypedDict, total=False):
     day_on_or_after: Required[str]
     """Inclusive lower bound on the day (YYYY-MM-DD, UTC)"""
 
     day_on_or_before: Required[str]
     """Inclusive upper bound on the day (YYYY-MM-DD, UTC)"""
-
-    group_by: Required[SequenceNotStr[str]]
-    """Dimensions to group by: day, organization_id, project_id, event_type, user_id"""
 
     event_types: Optional[
         List[

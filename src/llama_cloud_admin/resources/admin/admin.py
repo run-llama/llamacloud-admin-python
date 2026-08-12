@@ -33,6 +33,7 @@ from .usage_metrics import (
 )
 from ..._base_client import make_request_options
 from ...types.admin_get_llms_info_response import AdminGetLlmsInfoResponse
+from ...types.admin_get_s3_config_response import AdminGetS3ConfigResponse
 from ...types.admin_get_ocr_status_response import AdminGetOcrStatusResponse
 from ...types.admin_get_license_info_response import AdminGetLicenseInfoResponse
 from ...types.admin_get_filestores_info_response import AdminGetFilestoresInfoResponse
@@ -56,7 +57,7 @@ class AdminResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#accessing-raw-response-data-eg-headers
         """
         return AdminResourceWithRawResponse(self)
 
@@ -65,7 +66,7 @@ class AdminResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#with_streaming_response
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#with_streaming_response
         """
         return AdminResourceWithStreamingResponse(self)
 
@@ -184,6 +185,25 @@ class AdminResource(SyncAPIResource):
             cast_to=AdminGetOcrStatusResponse,
         )
 
+    def get_s3_config(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AdminGetS3ConfigResponse:
+        """Return resolved S3 configuration and presigned URL signing details."""
+        return self._get(
+            "/api/v1/admin/s3/config",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AdminGetS3ConfigResponse,
+        )
+
 
 class AsyncAdminResource(AsyncAPIResource):
     @cached_property
@@ -200,7 +220,7 @@ class AsyncAdminResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#accessing-raw-response-data-eg-headers
         """
         return AsyncAdminResourceWithRawResponse(self)
 
@@ -209,7 +229,7 @@ class AsyncAdminResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#with_streaming_response
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#with_streaming_response
         """
         return AsyncAdminResourceWithStreamingResponse(self)
 
@@ -328,6 +348,25 @@ class AsyncAdminResource(AsyncAPIResource):
             cast_to=AdminGetOcrStatusResponse,
         )
 
+    async def get_s3_config(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AdminGetS3ConfigResponse:
+        """Return resolved S3 configuration and presigned URL signing details."""
+        return await self._get(
+            "/api/v1/admin/s3/config",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AdminGetS3ConfigResponse,
+        )
+
 
 class AdminResourceWithRawResponse:
     def __init__(self, admin: AdminResource) -> None:
@@ -347,6 +386,9 @@ class AdminResourceWithRawResponse:
         )
         self.get_ocr_status = to_raw_response_wrapper(
             admin.get_ocr_status,
+        )
+        self.get_s3_config = to_raw_response_wrapper(
+            admin.get_s3_config,
         )
 
     @cached_property
@@ -377,6 +419,9 @@ class AsyncAdminResourceWithRawResponse:
         self.get_ocr_status = async_to_raw_response_wrapper(
             admin.get_ocr_status,
         )
+        self.get_s3_config = async_to_raw_response_wrapper(
+            admin.get_s3_config,
+        )
 
     @cached_property
     def users(self) -> AsyncUsersResourceWithRawResponse:
@@ -406,6 +451,9 @@ class AdminResourceWithStreamingResponse:
         self.get_ocr_status = to_streamed_response_wrapper(
             admin.get_ocr_status,
         )
+        self.get_s3_config = to_streamed_response_wrapper(
+            admin.get_s3_config,
+        )
 
     @cached_property
     def users(self) -> UsersResourceWithStreamingResponse:
@@ -434,6 +482,9 @@ class AsyncAdminResourceWithStreamingResponse:
         )
         self.get_ocr_status = async_to_streamed_response_wrapper(
             admin.get_ocr_status,
+        )
+        self.get_s3_config = async_to_streamed_response_wrapper(
+            admin.get_s3_config,
         )
 
     @cached_property

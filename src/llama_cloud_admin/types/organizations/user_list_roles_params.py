@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["OrganizationGetUsageParams"]
+__all__ = ["UserListRolesParams"]
 
 
-class OrganizationGetUsageParams(TypedDict, total=False):
-    get_current_invoice_total: bool
+class UserListRolesParams(TypedDict, total=False):
+    project_id: Optional[str]

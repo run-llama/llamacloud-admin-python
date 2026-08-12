@@ -9,7 +9,9 @@ import pytest
 
 from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
-from llama_cloud_admin.types.admin import UsageMetricAggregateResponse
+from llama_cloud_admin.types.admin import (
+    UsageMetricAggregateResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -71,6 +73,56 @@ class TestUsageMetrics:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_export(self, client: LlamaCloudAdmin) -> None:
+        usage_metric = client.admin.usage_metrics.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+        )
+        assert usage_metric is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_export_with_all_params(self, client: LlamaCloudAdmin) -> None:
+        usage_metric = client.admin.usage_metrics.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+            event_types=["audio_seconds_parsed", "chart_parsing_agentic"],
+            organization_id="organization_id",
+            project_id="project_id",
+            user_id="user_id",
+        )
+        assert usage_metric is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_export(self, client: LlamaCloudAdmin) -> None:
+        response = client.admin.usage_metrics.with_raw_response.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        usage_metric = response.parse()
+        assert usage_metric is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_export(self, client: LlamaCloudAdmin) -> None:
+        with client.admin.usage_metrics.with_streaming_response.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            usage_metric = response.parse()
+            assert usage_metric is None
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncUsageMetrics:
     parametrize = pytest.mark.parametrize(
@@ -128,5 +180,55 @@ class TestAsyncUsageMetrics:
 
             usage_metric = await response.parse()
             assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_export(self, async_client: AsyncLlamaCloudAdmin) -> None:
+        usage_metric = await async_client.admin.usage_metrics.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+        )
+        assert usage_metric is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_export_with_all_params(self, async_client: AsyncLlamaCloudAdmin) -> None:
+        usage_metric = await async_client.admin.usage_metrics.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+            event_types=["audio_seconds_parsed", "chart_parsing_agentic"],
+            organization_id="organization_id",
+            project_id="project_id",
+            user_id="user_id",
+        )
+        assert usage_metric is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_export(self, async_client: AsyncLlamaCloudAdmin) -> None:
+        response = await async_client.admin.usage_metrics.with_raw_response.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        usage_metric = await response.parse()
+        assert usage_metric is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_export(self, async_client: AsyncLlamaCloudAdmin) -> None:
+        async with async_client.admin.usage_metrics.with_streaming_response.export(
+            day_on_or_after="day_on_or_after",
+            day_on_or_before="day_on_or_before",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            usage_metric = await response.parse()
+            assert usage_metric is None
 
         assert cast(Any, response.is_closed) is True

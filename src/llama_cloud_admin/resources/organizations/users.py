@@ -19,6 +19,7 @@ from ..._response import (
 from ..._base_client import make_request_options
 from ...types.organizations import (
     user_add_params,
+    user_list_roles_params,
     user_assign_role_params,
     user_add_to_project_params,
 )
@@ -37,7 +38,7 @@ class UsersResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#accessing-raw-response-data-eg-headers
         """
         return UsersResourceWithRawResponse(self)
 
@@ -46,7 +47,7 @@ class UsersResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#with_streaming_response
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#with_streaming_response
         """
         return UsersResourceWithStreamingResponse(self)
 
@@ -300,6 +301,44 @@ class UsersResource(SyncAPIResource):
             cast_to=UserListProjectsResponse,
         )
 
+    def list_roles(
+        self,
+        organization_id: str,
+        *,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Optional[UserOrganizationRole]:
+        """
+        Get the role of a user in an organization.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        return self._get(
+            path_template("/api/v1/organizations/{organization_id}/users/roles", organization_id=organization_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"project_id": project_id}, user_list_roles_params.UserListRolesParams),
+            ),
+            cast_to=UserOrganizationRole,
+        )
+
     def remove_from_project(
         self,
         project_id: str,
@@ -352,7 +391,7 @@ class AsyncUsersResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#accessing-raw-response-data-eg-headers
         """
         return AsyncUsersResourceWithRawResponse(self)
 
@@ -361,7 +400,7 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/run-llama/llamacloud-admin-python#with_streaming_response
+        For more information, see https://www.github.com/run-llama/llama-cloud-admin-py#with_streaming_response
         """
         return AsyncUsersResourceWithStreamingResponse(self)
 
@@ -617,6 +656,46 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserListProjectsResponse,
         )
 
+    async def list_roles(
+        self,
+        organization_id: str,
+        *,
+        project_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Optional[UserOrganizationRole]:
+        """
+        Get the role of a user in an organization.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not organization_id:
+            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+        return await self._get(
+            path_template("/api/v1/organizations/{organization_id}/users/roles", organization_id=organization_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"project_id": project_id}, user_list_roles_params.UserListRolesParams
+                ),
+            ),
+            cast_to=UserOrganizationRole,
+        )
+
     async def remove_from_project(
         self,
         project_id: str,
@@ -684,6 +763,9 @@ class UsersResourceWithRawResponse:
         self.list_projects = to_raw_response_wrapper(
             users.list_projects,
         )
+        self.list_roles = to_raw_response_wrapper(
+            users.list_roles,
+        )
         self.remove_from_project = to_raw_response_wrapper(
             users.remove_from_project,
         )
@@ -710,6 +792,9 @@ class AsyncUsersResourceWithRawResponse:
         )
         self.list_projects = async_to_raw_response_wrapper(
             users.list_projects,
+        )
+        self.list_roles = async_to_raw_response_wrapper(
+            users.list_roles,
         )
         self.remove_from_project = async_to_raw_response_wrapper(
             users.remove_from_project,
@@ -738,6 +823,9 @@ class UsersResourceWithStreamingResponse:
         self.list_projects = to_streamed_response_wrapper(
             users.list_projects,
         )
+        self.list_roles = to_streamed_response_wrapper(
+            users.list_roles,
+        )
         self.remove_from_project = to_streamed_response_wrapper(
             users.remove_from_project,
         )
@@ -764,6 +852,9 @@ class AsyncUsersResourceWithStreamingResponse:
         )
         self.list_projects = async_to_streamed_response_wrapper(
             users.list_projects,
+        )
+        self.list_roles = async_to_streamed_response_wrapper(
+            users.list_roles,
         )
         self.remove_from_project = async_to_streamed_response_wrapper(
             users.remove_from_project,

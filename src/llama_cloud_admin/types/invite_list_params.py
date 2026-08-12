@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["InviteListMineParams"]
+__all__ = ["InviteListParams"]
 
 
-class InviteListMineParams(TypedDict, total=False):
+class InviteListParams(TypedDict, total=False):
     page_size: Optional[int]
 
     page_token: Optional[str]
