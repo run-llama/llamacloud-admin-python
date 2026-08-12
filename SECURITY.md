@@ -3,8 +3,8 @@
 ## Reporting Security Issues
 
 If you believe you have found a security vulnerability in this SDK or in the LlamaCloud APIs it
-calls, report it privately to LlamaIndex through your existing LlamaIndex point of contact. Please
-do not open a public GitHub issue for security reports.
+calls, please report it privately to support@runllama.ai. Do not open a public GitHub issue for
+security reports.
 
 ## Responsible Disclosure
 
