@@ -8,7 +8,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-This library's full surface — 30 endpoints across organizations, projects, invites, roles, and the global-admin operator API — is documented in [api.md](api.md) and in the docstring on each generated method. These admin endpoints are not covered by the public product reference at [developers.llamaindex.ai](https://developers.llamaindex.ai/), so treat `api.md` as the reference.
+The REST API documentation can be found on [admin.api.llamaindex.ai](https://admin.api.llamaindex.ai/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
