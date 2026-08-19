@@ -115,10 +115,6 @@ class PlanRecurringCredit(BaseModel):
 class Plan(BaseModel):
     limits: PlanLimits
 
-    metronome_plan_type: Literal["contract", "plan"]
-
-    metronome_rate_card_alias: Optional[str] = None
-
     name: Literal[
         "enterprise",
         "enterprise_contract",
@@ -153,9 +149,6 @@ class Plan(BaseModel):
 
     is_payment_failed: Optional[bool] = None
     """Whether the organization has a failed payment that requires support contact"""
-
-    metronome_customer_id: Optional[str] = None
-    """The ID of the customer in Metronome"""
 
     recurring_credits: Optional[List[PlanRecurringCredit]] = None
 
