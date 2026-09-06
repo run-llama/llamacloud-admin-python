@@ -193,8 +193,6 @@ class Usage(BaseModel):
 
     current_invoice_total_usd_cents: Optional[int] = None
 
-    total_indexes: Optional[int] = None
-
     total_users: Optional[int] = None
 
 
