@@ -5,7 +5,7 @@ from typing_extensions import override
 
 from ._base_client import BasePage, PageInfo, BaseSyncPage, BaseAsyncPage
 
-__all__ = ["SyncPaginatedCursor", "AsyncPaginatedCursor"]
+__all__ = ["SyncPaginatedCursor", "AsyncPaginatedCursor", "SyncPaginatedPageNumber", "AsyncPaginatedPageNumber"]
 
 _T = TypeVar("_T")
 
@@ -48,3 +48,53 @@ class AsyncPaginatedCursor(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
             return None
 
         return PageInfo(params={"page_token": next_page_token})
+
+
+class SyncPaginatedPageNumber(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+    items: List[_T]
+    pages: Optional[int] = None
+    page: Optional[int] = None
+
+    @override
+    def _get_page_items(self) -> List[_T]:
+        items = self.items
+        if not items:
+            return []
+        return items
+
+    @override
+    def next_page_info(self) -> Optional[PageInfo]:
+        current_page = self.page
+        if current_page is None:
+            current_page = 1
+
+        total_pages = self.pages
+        if total_pages is not None and current_page >= total_pages:
+            return None
+
+        return PageInfo(params={"page": current_page + 1})
+
+
+class AsyncPaginatedPageNumber(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+    items: List[_T]
+    pages: Optional[int] = None
+    page: Optional[int] = None
+
+    @override
+    def _get_page_items(self) -> List[_T]:
+        items = self.items
+        if not items:
+            return []
+        return items
+
+    @override
+    def next_page_info(self) -> Optional[PageInfo]:
+        current_page = self.page
+        if current_page is None:
+            current_page = 1
+
+        total_pages = self.pages
+        if total_pages is not None and current_page >= total_pages:
+            return None
+
+        return PageInfo(params={"page": current_page + 1})
