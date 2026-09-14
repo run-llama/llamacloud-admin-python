@@ -16,6 +16,8 @@ from llama_cloud_admin.types.organizations import (
     UserListProjectsResponse,
 )
 
+# pyright: reportDeprecated=false
+
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -291,19 +293,22 @@ class TestUsers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_projects(self, client: LlamaCloudAdmin) -> None:
-        user = client.organizations.users.list_projects(
-            user_id="user_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
+        with pytest.warns(DeprecationWarning):
+            user = client.organizations.users.list_projects(
+                user_id="user_id",
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
         assert_matches_type(UserListProjectsResponse, user, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_projects(self, client: LlamaCloudAdmin) -> None:
-        response = client.organizations.users.with_raw_response.list_projects(
-            user_id="user_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = client.organizations.users.with_raw_response.list_projects(
+                user_id="user_id",
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -313,32 +318,34 @@ class TestUsers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_projects(self, client: LlamaCloudAdmin) -> None:
-        with client.organizations.users.with_streaming_response.list_projects(
-            user_id="user_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            with client.organizations.users.with_streaming_response.list_projects(
+                user_id="user_id",
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = response.parse()
-            assert_matches_type(UserListProjectsResponse, user, path=["response"])
+                user = response.parse()
+                assert_matches_type(UserListProjectsResponse, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list_projects(self, client: LlamaCloudAdmin) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.users.with_raw_response.list_projects(
-                user_id="user_id",
-                organization_id="",
-            )
+        with pytest.warns(DeprecationWarning):
+            with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
+                client.organizations.users.with_raw_response.list_projects(
+                    user_id="user_id",
+                    organization_id="",
+                )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
-            client.organizations.users.with_raw_response.list_projects(
-                user_id="",
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
+            with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
+                client.organizations.users.with_raw_response.list_projects(
+                    user_id="",
+                    organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -679,19 +686,22 @@ class TestAsyncUsers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_projects(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        user = await async_client.organizations.users.list_projects(
-            user_id="user_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
+        with pytest.warns(DeprecationWarning):
+            user = await async_client.organizations.users.list_projects(
+                user_id="user_id",
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
+
         assert_matches_type(UserListProjectsResponse, user, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_projects(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        response = await async_client.organizations.users.with_raw_response.list_projects(
-            user_id="user_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.organizations.users.with_raw_response.list_projects(
+                user_id="user_id",
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -701,32 +711,34 @@ class TestAsyncUsers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_projects(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        async with async_client.organizations.users.with_streaming_response.list_projects(
-            user_id="user_id",
-            organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            async with async_client.organizations.users.with_streaming_response.list_projects(
+                user_id="user_id",
+                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            user = await response.parse()
-            assert_matches_type(UserListProjectsResponse, user, path=["response"])
+                user = await response.parse()
+                assert_matches_type(UserListProjectsResponse, user, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list_projects(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.users.with_raw_response.list_projects(
-                user_id="user_id",
-                organization_id="",
-            )
+        with pytest.warns(DeprecationWarning):
+            with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
+                await async_client.organizations.users.with_raw_response.list_projects(
+                    user_id="user_id",
+                    organization_id="",
+                )
 
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
-            await async_client.organizations.users.with_raw_response.list_projects(
-                user_id="",
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
+            with pytest.raises(ValueError, match=r"Expected a non-empty value for `user_id` but received ''"):
+                await async_client.organizations.users.with_raw_response.list_projects(
+                    user_id="",
+                    organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize

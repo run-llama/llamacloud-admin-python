@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Iterable, Optional
 
 import httpx
@@ -260,6 +261,7 @@ class UsersResource(SyncAPIResource):
             cast_to=UserListMembersResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def list_projects(
         self,
         user_id: str,
@@ -274,6 +276,10 @@ class UsersResource(SyncAPIResource):
     ) -> UserListProjectsResponse:
         """
         List all projects for a user in an organization.
+
+        Deprecated: use
+        `GET /api/v2/organizations/{organization_id}/users/{user_id}/projects`, which is
+        paginated.
 
         Args:
           extra_headers: Send extra headers
@@ -577,6 +583,7 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserListMembersResponse,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def list_projects(
         self,
         user_id: str,
@@ -591,6 +598,10 @@ class AsyncUsersResource(AsyncAPIResource):
     ) -> UserListProjectsResponse:
         """
         List all projects for a user in an organization.
+
+        Deprecated: use
+        `GET /api/v2/organizations/{organization_id}/users/{user_id}/projects`, which is
+        paginated.
 
         Args:
           extra_headers: Send extra headers
@@ -681,8 +692,10 @@ class UsersResourceWithRawResponse:
         self.list_members = to_raw_response_wrapper(
             users.list_members,
         )
-        self.list_projects = to_raw_response_wrapper(
-            users.list_projects,
+        self.list_projects = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                users.list_projects,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.remove_from_project = to_raw_response_wrapper(
             users.remove_from_project,
@@ -708,8 +721,10 @@ class AsyncUsersResourceWithRawResponse:
         self.list_members = async_to_raw_response_wrapper(
             users.list_members,
         )
-        self.list_projects = async_to_raw_response_wrapper(
-            users.list_projects,
+        self.list_projects = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                users.list_projects,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.remove_from_project = async_to_raw_response_wrapper(
             users.remove_from_project,
@@ -735,8 +750,10 @@ class UsersResourceWithStreamingResponse:
         self.list_members = to_streamed_response_wrapper(
             users.list_members,
         )
-        self.list_projects = to_streamed_response_wrapper(
-            users.list_projects,
+        self.list_projects = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                users.list_projects,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.remove_from_project = to_streamed_response_wrapper(
             users.remove_from_project,
@@ -762,8 +779,10 @@ class AsyncUsersResourceWithStreamingResponse:
         self.list_members = async_to_streamed_response_wrapper(
             users.list_members,
         )
-        self.list_projects = async_to_streamed_response_wrapper(
-            users.list_projects,
+        self.list_projects = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                users.list_projects,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.remove_from_project = async_to_streamed_response_wrapper(
             users.remove_from_project,
