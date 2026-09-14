@@ -11,8 +11,8 @@ from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
 from llama_cloud_admin.types import (
     QuotaConfiguration,
-    QuotaManagementListResponse,
 )
+from llama_cloud_admin.pagination import SyncPaginatedPageNumber, AsyncPaginatedPageNumber
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -78,7 +78,7 @@ class TestQuotaManagement:
             source_id="source_id",
             source_type="GLOBAL",
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -92,7 +92,7 @@ class TestQuotaManagement:
             page=0,
             page_size=1,
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -105,7 +105,7 @@ class TestQuotaManagement:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         quota_management = response.parse()
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -118,7 +118,7 @@ class TestQuotaManagement:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             quota_management = response.parse()
-            assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+            assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -232,7 +232,7 @@ class TestAsyncQuotaManagement:
             source_id="source_id",
             source_type="GLOBAL",
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -246,7 +246,7 @@ class TestAsyncQuotaManagement:
             page=0,
             page_size=1,
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -259,7 +259,7 @@ class TestAsyncQuotaManagement:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         quota_management = await response.parse()
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -272,7 +272,7 @@ class TestAsyncQuotaManagement:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             quota_management = await response.parse()
-            assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+            assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

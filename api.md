@@ -104,13 +104,13 @@ Methods:
 Types:
 
 ```python
-from llama_cloud_admin.types import QuotaConfiguration, QuotaManagementListResponse
+from llama_cloud_admin.types import QuotaConfiguration
 ```
 
 Methods:
 
 - <code title="post /api/v1/beta/quota-management">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">create</a>(\*\*<a href="src/llama_cloud_admin/types/quota_management_create_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/quota_configuration.py">QuotaConfiguration</a></code>
-- <code title="get /api/v1/beta/quota-management">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/quota_management_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/quota_management_list_response.py">QuotaManagementListResponse</a></code>
+- <code title="get /api/v1/beta/quota-management">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/quota_management_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/quota_configuration.py">SyncPaginatedPageNumber[QuotaConfiguration]</a></code>
 - <code title="delete /api/v1/beta/quota-management/{quota_id}">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">delete</a>(quota_id, \*\*<a href="src/llama_cloud_admin/types/quota_management_delete_params.py">params</a>) -> None</code>
 
 # Admin

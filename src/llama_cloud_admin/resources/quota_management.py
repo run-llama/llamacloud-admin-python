@@ -18,9 +18,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncPaginatedPageNumber, AsyncPaginatedPageNumber
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.quota_configuration import QuotaConfiguration
-from ..types.quota_management_list_response import QuotaManagementListResponse
 
 __all__ = ["QuotaManagementResource", "AsyncQuotaManagementResource"]
 
@@ -189,7 +189,7 @@ class QuotaManagementResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> QuotaManagementListResponse:
+    ) -> SyncPaginatedPageNumber[QuotaConfiguration]:
         """Retrieve a paginated list of quota configurations with optional filtering.
 
         When
@@ -205,8 +205,9 @@ class QuotaManagementResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/api/v1/beta/quota-management",
+            page=SyncPaginatedPageNumber[QuotaConfiguration],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -225,7 +226,7 @@ class QuotaManagementResource(SyncAPIResource):
                     quota_management_list_params.QuotaManagementListParams,
                 ),
             ),
-            cast_to=QuotaManagementListResponse,
+            model=QuotaConfiguration,
         )
 
     def delete(
@@ -350,7 +351,7 @@ class AsyncQuotaManagementResource(AsyncAPIResource):
             cast_to=QuotaConfiguration,
         )
 
-    async def list(
+    def list(
         self,
         *,
         source_id: str,
@@ -434,7 +435,7 @@ class AsyncQuotaManagementResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> QuotaManagementListResponse:
+    ) -> AsyncPaginator[QuotaConfiguration, AsyncPaginatedPageNumber[QuotaConfiguration]]:
         """Retrieve a paginated list of quota configurations with optional filtering.
 
         When
@@ -450,14 +451,15 @@ class AsyncQuotaManagementResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/api/v1/beta/quota-management",
+            page=AsyncPaginatedPageNumber[QuotaConfiguration],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "source_id": source_id,
                         "source_type": source_type,
@@ -470,7 +472,7 @@ class AsyncQuotaManagementResource(AsyncAPIResource):
                     quota_management_list_params.QuotaManagementListParams,
                 ),
             ),
-            cast_to=QuotaManagementListResponse,
+            model=QuotaConfiguration,
         )
 
     async def delete(
