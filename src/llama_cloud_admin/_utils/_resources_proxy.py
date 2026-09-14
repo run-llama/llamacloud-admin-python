@@ -16,7 +16,6 @@ class ResourcesProxy(LazyProxy[Any]):
     @override
     def __load__(self) -> Any:
         import importlib
-
         mod = importlib.import_module("llama_cloud_admin.resources")
         return mod
 

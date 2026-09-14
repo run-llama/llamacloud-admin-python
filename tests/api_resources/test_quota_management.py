@@ -2,23 +2,30 @@
 
 from __future__ import annotations
 
-import os
-from typing import Any, cast
-
-import pytest
-
-from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
-from llama_cloud_admin.types import (
-    QuotaConfiguration,
-    QuotaManagementListResponse,
-)
+
+from llama_cloud_admin.types import QuotaConfiguration
+
+from typing import cast, Any
+
+from llama_cloud_admin.pagination import SyncPaginatedPageNumber, AsyncPaginatedPageNumber
+
+import os
+import pytest
+import httpx
+from typing_extensions import get_args
+from respx import MockRouter
+from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
+from tests.utils import assert_matches_type
+from llama_cloud_admin.types import quota_management_create_params
+from llama_cloud_admin.types import quota_management_list_params
+from llama_cloud_admin.types import quota_management_delete_params
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-
 class TestQuotaManagement:
-    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=['loose', 'strict'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -28,7 +35,7 @@ class TestQuotaManagement:
             setting="allow_pay_as_you_go",
             value=0,
         )
-        assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+        assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -39,11 +46,12 @@ class TestQuotaManagement:
             value=0,
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+        assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloudAdmin) -> None:
+
         response = client.quota_management.with_raw_response.create(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             setting="allow_pay_as_you_go",
@@ -51,9 +59,9 @@ class TestQuotaManagement:
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         quota_management = response.parse()
-        assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+        assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -62,12 +70,12 @@ class TestQuotaManagement:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             setting="allow_pay_as_you_go",
             value=0,
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             quota_management = response.parse()
-            assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+            assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -78,7 +86,7 @@ class TestQuotaManagement:
             source_id="source_id",
             source_type="GLOBAL",
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -92,20 +100,21 @@ class TestQuotaManagement:
             page=0,
             page_size=1,
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloudAdmin) -> None:
+
         response = client.quota_management.with_raw_response.list(
             source_id="source_id",
             source_type="GLOBAL",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         quota_management = response.parse()
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -113,12 +122,12 @@ class TestQuotaManagement:
         with client.quota_management.with_streaming_response.list(
             source_id="source_id",
             source_type="GLOBAL",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             quota_management = response.parse()
-            assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+            assert_matches_type(SyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -134,13 +143,14 @@ class TestQuotaManagement:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloudAdmin) -> None:
+
         response = client.quota_management.with_raw_response.delete(
             quota_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         quota_management = response.parse()
         assert quota_management is None
 
@@ -150,9 +160,9 @@ class TestQuotaManagement:
         with client.quota_management.with_streaming_response.delete(
             quota_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             quota_management = response.parse()
             assert quota_management is None
@@ -163,16 +173,13 @@ class TestQuotaManagement:
     @parametrize
     def test_path_params_delete(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `quota_id` but received ''"):
-            client.quota_management.with_raw_response.delete(
-                quota_id="",
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
-
-
+          client.quota_management.with_raw_response.delete(
+              quota_id="",
+              organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          )
 class TestAsyncQuotaManagement:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
+    parametrize = pytest.mark.parametrize("async_client", [False, True, {'http_client': 'aiohttp'}], indirect=True, ids=['loose', 'strict', 'aiohttp'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -182,7 +189,7 @@ class TestAsyncQuotaManagement:
             setting="allow_pay_as_you_go",
             value=0,
         )
-        assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+        assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -193,11 +200,12 @@ class TestAsyncQuotaManagement:
             value=0,
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+        assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.quota_management.with_raw_response.create(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             setting="allow_pay_as_you_go",
@@ -205,9 +213,9 @@ class TestAsyncQuotaManagement:
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         quota_management = await response.parse()
-        assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+        assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -216,12 +224,12 @@ class TestAsyncQuotaManagement:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             setting="allow_pay_as_you_go",
             value=0,
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             quota_management = await response.parse()
-            assert_matches_type(QuotaConfiguration, quota_management, path=["response"])
+            assert_matches_type(QuotaConfiguration, quota_management, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -232,7 +240,7 @@ class TestAsyncQuotaManagement:
             source_id="source_id",
             source_type="GLOBAL",
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -246,20 +254,21 @@ class TestAsyncQuotaManagement:
             page=0,
             page_size=1,
         )
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.quota_management.with_raw_response.list(
             source_id="source_id",
             source_type="GLOBAL",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         quota_management = await response.parse()
-        assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+        assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -267,12 +276,12 @@ class TestAsyncQuotaManagement:
         async with async_client.quota_management.with_streaming_response.list(
             source_id="source_id",
             source_type="GLOBAL",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             quota_management = await response.parse()
-            assert_matches_type(QuotaManagementListResponse, quota_management, path=["response"])
+            assert_matches_type(AsyncPaginatedPageNumber[QuotaConfiguration], quota_management, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -288,13 +297,14 @@ class TestAsyncQuotaManagement:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.quota_management.with_raw_response.delete(
             quota_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         quota_management = await response.parse()
         assert quota_management is None
 
@@ -304,9 +314,9 @@ class TestAsyncQuotaManagement:
         async with async_client.quota_management.with_streaming_response.delete(
             quota_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             quota_management = await response.parse()
             assert quota_management is None
@@ -317,7 +327,7 @@ class TestAsyncQuotaManagement:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `quota_id` but received ''"):
-            await async_client.quota_management.with_raw_response.delete(
-                quota_id="",
-                organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            )
+          await async_client.quota_management.with_raw_response.delete(
+              quota_id="",
+              organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+          )

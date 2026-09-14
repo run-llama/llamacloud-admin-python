@@ -2,24 +2,31 @@
 
 from __future__ import annotations
 
-import os
-from typing import Any, cast
-
-import pytest
-
-from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
-from llama_cloud_admin.types import (
-    Organization,
-    UsageAndPlan,
-)
+
+from llama_cloud_admin.types import Organization, UsageAndPlan
+
+from typing import cast, Any
+
 from llama_cloud_admin.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
+
+import os
+import pytest
+import httpx
+from typing_extensions import get_args
+from respx import MockRouter
+from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
+from tests.utils import assert_matches_type
+from llama_cloud_admin.types import organization_create_params
+from llama_cloud_admin.types import organization_update_params
+from llama_cloud_admin.types import organization_list_params
+from llama_cloud_admin.types import organization_get_usage_params
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-
 class TestOrganizations:
-    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=['loose', 'strict'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -27,31 +34,32 @@ class TestOrganizations:
         organization = client.organizations.create(
             name="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloudAdmin) -> None:
+
         response = client.organizations.with_raw_response.create(
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: LlamaCloudAdmin) -> None:
         with client.organizations.with_streaming_response.create(
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(Organization, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -62,20 +70,21 @@ class TestOrganizations:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloudAdmin) -> None:
+
         response = client.organizations.with_raw_response.update(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -83,12 +92,12 @@ class TestOrganizations:
         with client.organizations.with_streaming_response.update(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(Organization, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -96,16 +105,16 @@ class TestOrganizations:
     @parametrize
     def test_path_params_update(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.with_raw_response.update(
-                organization_id="",
-                name="x",
-            )
+          client.organizations.with_raw_response.update(
+              organization_id="",
+              name="x",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloudAdmin) -> None:
         organization = client.organizations.list()
-        assert_matches_type(SyncPaginatedCursor[Organization], organization, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Organization], organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -115,27 +124,28 @@ class TestOrganizations:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(SyncPaginatedCursor[Organization], organization, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Organization], organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloudAdmin) -> None:
+
         response = client.organizations.with_raw_response.list()
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = response.parse()
-        assert_matches_type(SyncPaginatedCursor[Organization], organization, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Organization], organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloudAdmin) -> None:
-        with client.organizations.with_streaming_response.list() as response:
+        with client.organizations.with_streaming_response.list() as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = response.parse()
-            assert_matches_type(SyncPaginatedCursor[Organization], organization, path=["response"])
+            assert_matches_type(SyncPaginatedCursor[Organization], organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -150,12 +160,13 @@ class TestOrganizations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloudAdmin) -> None:
+
         response = client.organizations.with_raw_response.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = response.parse()
         assert organization is None
 
@@ -164,9 +175,9 @@ class TestOrganizations:
     def test_streaming_response_delete(self, client: LlamaCloudAdmin) -> None:
         with client.organizations.with_streaming_response.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = response.parse()
             assert organization is None
@@ -177,9 +188,9 @@ class TestOrganizations:
     @parametrize
     def test_path_params_delete(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.with_raw_response.delete(
-                "",
-            )
+          client.organizations.with_raw_response.delete(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -187,31 +198,32 @@ class TestOrganizations:
         organization = client.organizations.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloudAdmin) -> None:
+
         response = client.organizations.with_raw_response.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloudAdmin) -> None:
         with client.organizations.with_streaming_response.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(Organization, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -219,9 +231,9 @@ class TestOrganizations:
     @parametrize
     def test_path_params_get(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.with_raw_response.get(
-                "",
-            )
+          client.organizations.with_raw_response.get(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -229,7 +241,7 @@ class TestOrganizations:
         organization = client.organizations.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(UsageAndPlan, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -238,31 +250,32 @@ class TestOrganizations:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             get_current_invoice_total=True,
         )
-        assert_matches_type(UsageAndPlan, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_usage(self, client: LlamaCloudAdmin) -> None:
+
         response = client.organizations.with_raw_response.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = response.parse()
-        assert_matches_type(UsageAndPlan, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_usage(self, client: LlamaCloudAdmin) -> None:
         with client.organizations.with_streaming_response.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = response.parse()
-            assert_matches_type(UsageAndPlan, organization, path=["response"])
+            assert_matches_type(UsageAndPlan, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -270,15 +283,12 @@ class TestOrganizations:
     @parametrize
     def test_path_params_get_usage(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            client.organizations.with_raw_response.get_usage(
-                organization_id="",
-            )
-
-
+          client.organizations.with_raw_response.get_usage(
+              organization_id="",
+          )
 class TestAsyncOrganizations:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
+    parametrize = pytest.mark.parametrize("async_client", [False, True, {'http_client': 'aiohttp'}], indirect=True, ids=['loose', 'strict', 'aiohttp'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -286,31 +296,32 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.create(
             name="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.organizations.with_raw_response.create(
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = await response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.organizations.with_streaming_response.create(
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = await response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(Organization, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -321,20 +332,21 @@ class TestAsyncOrganizations:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.organizations.with_raw_response.update(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = await response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -342,12 +354,12 @@ class TestAsyncOrganizations:
         async with async_client.organizations.with_streaming_response.update(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = await response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(Organization, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -355,16 +367,16 @@ class TestAsyncOrganizations:
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.with_raw_response.update(
-                organization_id="",
-                name="x",
-            )
+          await async_client.organizations.with_raw_response.update(
+              organization_id="",
+              name="x",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
         organization = await async_client.organizations.list()
-        assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -374,27 +386,28 @@ class TestAsyncOrganizations:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.organizations.with_raw_response.list()
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = await response.parse()
-        assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        async with async_client.organizations.with_streaming_response.list() as response:
+        async with async_client.organizations.with_streaming_response.list() as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = await response.parse()
-            assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=["response"])
+            assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -409,12 +422,13 @@ class TestAsyncOrganizations:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.organizations.with_raw_response.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = await response.parse()
         assert organization is None
 
@@ -423,9 +437,9 @@ class TestAsyncOrganizations:
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.organizations.with_streaming_response.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = await response.parse()
             assert organization is None
@@ -436,9 +450,9 @@ class TestAsyncOrganizations:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.with_raw_response.delete(
-                "",
-            )
+          await async_client.organizations.with_raw_response.delete(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -446,31 +460,32 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.organizations.with_raw_response.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = await response.parse()
-        assert_matches_type(Organization, organization, path=["response"])
+        assert_matches_type(Organization, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.organizations.with_streaming_response.get(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = await response.parse()
-            assert_matches_type(Organization, organization, path=["response"])
+            assert_matches_type(Organization, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -478,9 +493,9 @@ class TestAsyncOrganizations:
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.with_raw_response.get(
-                "",
-            )
+          await async_client.organizations.with_raw_response.get(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -488,7 +503,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(UsageAndPlan, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -497,31 +512,32 @@ class TestAsyncOrganizations:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             get_current_invoice_total=True,
         )
-        assert_matches_type(UsageAndPlan, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_usage(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.organizations.with_raw_response.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         organization = await response.parse()
-        assert_matches_type(UsageAndPlan, organization, path=["response"])
+        assert_matches_type(UsageAndPlan, organization, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_usage(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.organizations.with_streaming_response.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             organization = await response.parse()
-            assert_matches_type(UsageAndPlan, organization, path=["response"])
+            assert_matches_type(UsageAndPlan, organization, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -529,6 +545,6 @@ class TestAsyncOrganizations:
     @parametrize
     async def test_path_params_get_usage(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `organization_id` but received ''"):
-            await async_client.organizations.with_raw_response.get_usage(
-                organization_id="",
-            )
+          await async_client.organizations.with_raw_response.get_usage(
+              organization_id="",
+          )

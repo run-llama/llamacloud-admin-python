@@ -65,12 +65,10 @@ client = AsyncLlamaCloudAdmin(
     api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
 )
 
-
 async def main() -> None:
-    organization_members = await client.organizations.users.list_members(
-        "my-organization-id",
-    )
-
+  organization_members = await client.organizations.users.list_members(
+      "my-organization-id",
+  )
 
 asyncio.run(main())
 ```
@@ -95,16 +93,14 @@ import asyncio
 from llama_cloud_admin import DefaultAioHttpClient
 from llama_cloud_admin import AsyncLlamaCloudAdmin
 
-
 async def main() -> None:
-    async with AsyncLlamaCloudAdmin(
-        api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
-        http_client=DefaultAioHttpClient(),
-    ) as client:
-        organization_members = await client.organizations.users.list_members(
-            "my-organization-id",
-        )
-
+  async with AsyncLlamaCloudAdmin(
+    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted
+    http_client=DefaultAioHttpClient(),
+) as client:
+    organization_members = await client.organizations.users.list_members(
+        "my-organization-id",
+    )
 
 asyncio.run(main())
 ```
@@ -150,16 +146,14 @@ from llama_cloud_admin import AsyncLlamaCloudAdmin
 
 client = AsyncLlamaCloudAdmin()
 
-
 async def main() -> None:
     all_organizations = []
     # Iterate through items across all pages, issuing requests as needed.
     async for organization in client.organizations.list(
-        page_size=20,
-    ):
+    page_size=20,
+):
         all_organizations.append(organization)
     print(all_organizations)
-
 
 asyncio.run(main())
 ```
@@ -185,7 +179,7 @@ first_page = await client.organizations.list(
     page_size=20,
 )
 
-print(f"next page cursor: {first_page.next_page_token}")  # => "next page cursor: ..."
+print(f"next page cursor: {first_page.next_page_token}") # => "next page cursor: ..."
 for organization in first_page.items:
     print(organization.id)
 
@@ -227,7 +221,7 @@ try:
     client.organizations.list()
 except llama_cloud_admin.APIConnectionError as e:
     print("The server could not be reached")
-    print(e.__cause__)  # an underlying Exception, likely raised within httpx.
+    print(e.__cause__) # an underlying Exception, likely raised within httpx.
 except llama_cloud_admin.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
 except llama_cloud_admin.APIStatusError as e:
@@ -268,7 +262,7 @@ client = LlamaCloudAdmin(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).organizations.list()
+client.with_options(max_retries = 5).organizations.list()
 ```
 
 ### Timeouts
@@ -293,7 +287,7 @@ client = LlamaCloudAdmin(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).organizations.list()
+client.with_options(timeout = 5.0).organizations.list()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -352,11 +346,11 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.organizations.with_streaming_response.list() as response:
-    print(response.headers.get("X-My-Header"))
+with client.organizations.with_streaming_response.list() as response :
+    print(response.headers.get('X-My-Header'))
 
     for line in response.iter_lines():
-        print(line)
+      print(line)
 ```
 
 The context manager is required so that the response will reliably be closed.
@@ -410,10 +404,7 @@ from llama_cloud_admin import LlamaCloudAdmin, DefaultHttpxClient
 client = LlamaCloudAdmin(
     # Or use the `LLAMA_CLOUD_ADMIN_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
-    http_client=DefaultHttpxClient(
-        proxy="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
+    http_client=DefaultHttpxClient(proxy="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0")),
 )
 ```
 

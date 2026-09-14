@@ -2,20 +2,26 @@
 
 from __future__ import annotations
 
-import os
-from typing import Any, cast
-
-import pytest
-
-from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
+
 from llama_cloud_admin.types.admin import UsageMetricAggregateResponse
+
+from typing import cast, Any
+
+import os
+import pytest
+import httpx
+from typing_extensions import get_args
+from respx import MockRouter
+from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
+from tests.utils import assert_matches_type
+from llama_cloud_admin.types.admin import usage_metric_aggregate_params
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-
 class TestUsageMetrics:
-    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=['loose', 'strict'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -25,7 +31,7 @@ class TestUsageMetrics:
             day_on_or_before="day_on_or_before",
             group_by=["string"],
         )
-        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -39,11 +45,12 @@ class TestUsageMetrics:
             project_id="project_id",
             user_id="user_id",
         )
-        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_aggregate(self, client: LlamaCloudAdmin) -> None:
+
         response = client.admin.usage_metrics.with_raw_response.aggregate(
             day_on_or_after="day_on_or_after",
             day_on_or_before="day_on_or_before",
@@ -51,9 +58,9 @@ class TestUsageMetrics:
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         usage_metric = response.parse()
-        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -62,20 +69,17 @@ class TestUsageMetrics:
             day_on_or_after="day_on_or_after",
             day_on_or_before="day_on_or_before",
             group_by=["string"],
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             usage_metric = response.parse()
-            assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+            assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
         assert cast(Any, response.is_closed) is True
-
-
 class TestAsyncUsageMetrics:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
+    parametrize = pytest.mark.parametrize("async_client", [False, True, {'http_client': 'aiohttp'}], indirect=True, ids=['loose', 'strict', 'aiohttp'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -85,7 +89,7 @@ class TestAsyncUsageMetrics:
             day_on_or_before="day_on_or_before",
             group_by=["string"],
         )
-        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -99,11 +103,12 @@ class TestAsyncUsageMetrics:
             project_id="project_id",
             user_id="user_id",
         )
-        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_aggregate(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.admin.usage_metrics.with_raw_response.aggregate(
             day_on_or_after="day_on_or_after",
             day_on_or_before="day_on_or_before",
@@ -111,9 +116,9 @@ class TestAsyncUsageMetrics:
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         usage_metric = await response.parse()
-        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+        assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -122,11 +127,11 @@ class TestAsyncUsageMetrics:
             day_on_or_after="day_on_or_after",
             day_on_or_before="day_on_or_before",
             group_by=["string"],
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             usage_metric = await response.parse()
-            assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=["response"])
+            assert_matches_type(UsageMetricAggregateResponse, usage_metric, path=['response'])
 
         assert cast(Any, response.is_closed) is True

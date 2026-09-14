@@ -2,29 +2,36 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
-from datetime import datetime
-from typing_extensions import Literal
-
 import httpx
 
-from ..types import api_key_list_params, api_key_create_params
-from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import path_template, maybe_transform, async_maybe_transform
-from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
-from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
-from .._base_client import AsyncPaginator, make_request_options
+
+from .._compat import cached_property
+
 from ..types.api_key import APIKey
 
-__all__ = ["APIKeysResource", "AsyncAPIKeysResource"]
+from .._utils import maybe_transform, path_template, async_maybe_transform
 
+from .._base_client import make_request_options, AsyncPaginator
+
+from typing import Union, Optional
+
+from datetime import datetime
+
+from .._types import Omit, omit, NotGiven, SequenceNotStr
+
+from typing_extensions import Literal
+
+from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
+
+from .._response import to_raw_response_wrapper, async_to_raw_response_wrapper, to_streamed_response_wrapper, async_to_streamed_response_wrapper
+
+from typing_extensions import Literal, overload
+from .._types import Timeout, Headers, NotGiven, not_given, Omit, omit, NoneType, Query, Body
+from ..types import api_key_create_params
+from ..types import api_key_list_params
+
+__all__ = ["APIKeysResource", "AsyncAPIKeysResource"]
 
 class APIKeysResource(SyncAPIResource):
     @cached_property
@@ -46,20 +53,18 @@ class APIKeysResource(SyncAPIResource):
         """
         return APIKeysResourceWithStreamingResponse(self)
 
-    def create(
-        self,
-        *,
-        expires_at: Union[str, datetime, None] | Omit = omit,
-        key_type: Literal["agent", "user"] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> APIKey:
+    def create(self,
+    *,
+    expires_at: Union[str, datetime, None] | Omit = omit,
+    key_type: Literal["agent", "user"] | Omit = omit,
+    name: Optional[str] | Omit = omit,
+    project_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> APIKey:
         """
         Create a new API key.
 
@@ -86,37 +91,30 @@ class APIKeysResource(SyncAPIResource):
         """
         return self._post(
             "/api/v1/beta/api-keys",
-            body=maybe_transform(
-                {
-                    "expires_at": expires_at,
-                    "key_type": key_type,
-                    "name": name,
-                    "project_id": project_id,
-                },
-                api_key_create_params.APIKeyCreateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            body=maybe_transform({
+                "expires_at": expires_at,
+                "key_type": key_type,
+                "name": name,
+                "project_id": project_id,
+            }, api_key_create_params.APIKeyCreateParams),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=APIKey,
         )
 
-    def list(
-        self,
-        *,
-        expand: SequenceNotStr[str] | Omit = omit,
-        key_type: Optional[Literal["agent", "user"]] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        page_size: Optional[int] | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPaginatedCursor[APIKey]:
+    def list(self,
+    *,
+    expand: SequenceNotStr[str] | Omit = omit,
+    key_type: Optional[Literal["agent", "user"]] | Omit = omit,
+    name: Optional[str] | Omit = omit,
+    page_size: Optional[int] | Omit = omit,
+    page_token: Optional[str] | Omit = omit,
+    project_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> SyncPaginatedCursor[APIKey]:
         """
         List API keys.
 
@@ -140,38 +138,27 @@ class APIKeysResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/api-keys",
-            page=SyncPaginatedCursor[APIKey],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "expand": expand,
-                        "key_type": key_type,
-                        "name": name,
-                        "page_size": page_size,
-                        "page_token": page_token,
-                        "project_id": project_id,
-                    },
-                    api_key_list_params.APIKeyListParams,
-                ),
-            ),
+            page = SyncPaginatedCursor[APIKey],
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=maybe_transform({
+                "expand": expand,
+                "key_type": key_type,
+                "name": name,
+                "page_size": page_size,
+                "page_token": page_token,
+                "project_id": project_id,
+            }, api_key_list_params.APIKeyListParams)),
             model=APIKey,
         )
 
-    def delete(
-        self,
-        api_key_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
+    def delete(self,
+    api_key_id: str,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> None:
         """
         Delete an API key.
 
@@ -191,16 +178,15 @@ class APIKeysResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not api_key_id:
-            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `api_key_id` but received {api_key_id!r}'
+          )
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
             path_template("/api/v1/beta/api-keys/{api_key_id}", api_key_id=api_key_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=NoneType,
         )
-
 
 class AsyncAPIKeysResource(AsyncAPIResource):
     @cached_property
@@ -222,20 +208,18 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         """
         return AsyncAPIKeysResourceWithStreamingResponse(self)
 
-    async def create(
-        self,
-        *,
-        expires_at: Union[str, datetime, None] | Omit = omit,
-        key_type: Literal["agent", "user"] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> APIKey:
+    async def create(self,
+    *,
+    expires_at: Union[str, datetime, None] | Omit = omit,
+    key_type: Literal["agent", "user"] | Omit = omit,
+    name: Optional[str] | Omit = omit,
+    project_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> APIKey:
         """
         Create a new API key.
 
@@ -262,37 +246,30 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         """
         return await self._post(
             "/api/v1/beta/api-keys",
-            body=await async_maybe_transform(
-                {
-                    "expires_at": expires_at,
-                    "key_type": key_type,
-                    "name": name,
-                    "project_id": project_id,
-                },
-                api_key_create_params.APIKeyCreateParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            body=await async_maybe_transform({
+                "expires_at": expires_at,
+                "key_type": key_type,
+                "name": name,
+                "project_id": project_id,
+            }, api_key_create_params.APIKeyCreateParams),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=APIKey,
         )
 
-    def list(
-        self,
-        *,
-        expand: SequenceNotStr[str] | Omit = omit,
-        key_type: Optional[Literal["agent", "user"]] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        page_size: Optional[int] | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[APIKey, AsyncPaginatedCursor[APIKey]]:
+    def list(self,
+    *,
+    expand: SequenceNotStr[str] | Omit = omit,
+    key_type: Optional[Literal["agent", "user"]] | Omit = omit,
+    name: Optional[str] | Omit = omit,
+    page_size: Optional[int] | Omit = omit,
+    page_token: Optional[str] | Omit = omit,
+    project_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AsyncPaginator[APIKey, AsyncPaginatedCursor[APIKey]]:
         """
         List API keys.
 
@@ -316,38 +293,27 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/api/v1/beta/api-keys",
-            page=AsyncPaginatedCursor[APIKey],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "expand": expand,
-                        "key_type": key_type,
-                        "name": name,
-                        "page_size": page_size,
-                        "page_token": page_token,
-                        "project_id": project_id,
-                    },
-                    api_key_list_params.APIKeyListParams,
-                ),
-            ),
+            page = AsyncPaginatedCursor[APIKey],
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=maybe_transform({
+                "expand": expand,
+                "key_type": key_type,
+                "name": name,
+                "page_size": page_size,
+                "page_token": page_token,
+                "project_id": project_id,
+            }, api_key_list_params.APIKeyListParams)),
             model=APIKey,
         )
 
-    async def delete(
-        self,
-        api_key_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
+    async def delete(self,
+    api_key_id: str,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> None:
         """
         Delete an API key.
 
@@ -367,16 +333,15 @@ class AsyncAPIKeysResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not api_key_id:
-            raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `api_key_id` but received {api_key_id!r}'
+          )
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
             path_template("/api/v1/beta/api-keys/{api_key_id}", api_key_id=api_key_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=NoneType,
         )
-
 
 class APIKeysResourceWithRawResponse:
     def __init__(self, api_keys: APIKeysResource) -> None:
@@ -392,7 +357,6 @@ class APIKeysResourceWithRawResponse:
             api_keys.delete,
         )
 
-
 class AsyncAPIKeysResourceWithRawResponse:
     def __init__(self, api_keys: AsyncAPIKeysResource) -> None:
         self._api_keys = api_keys
@@ -407,7 +371,6 @@ class AsyncAPIKeysResourceWithRawResponse:
             api_keys.delete,
         )
 
-
 class APIKeysResourceWithStreamingResponse:
     def __init__(self, api_keys: APIKeysResource) -> None:
         self._api_keys = api_keys
@@ -421,7 +384,6 @@ class APIKeysResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             api_keys.delete,
         )
-
 
 class AsyncAPIKeysResourceWithStreamingResponse:
     def __init__(self, api_keys: AsyncAPIKeysResource) -> None:

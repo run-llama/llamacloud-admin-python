@@ -2,21 +2,28 @@
 
 from __future__ import annotations
 
-import os
-from typing import Any, cast
-
-import pytest
-
-from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
-from llama_cloud_admin.types import Invite, InviteAcceptResponse
+
+from llama_cloud_admin.types import InviteAcceptResponse, Invite
+
+from typing import cast, Any
+
 from llama_cloud_admin.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
+
+import os
+import pytest
+import httpx
+from typing_extensions import get_args
+from respx import MockRouter
+from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
+from tests.utils import assert_matches_type
+from llama_cloud_admin.types import invite_list_mine_params
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-
 class TestInvites:
-    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=['loose', 'strict'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -24,31 +31,32 @@ class TestInvites:
         invite = client.invites.accept(
             "invite_id",
         )
-        assert_matches_type(InviteAcceptResponse, invite, path=["response"])
+        assert_matches_type(InviteAcceptResponse, invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_accept(self, client: LlamaCloudAdmin) -> None:
+
         response = client.invites.with_raw_response.accept(
             "invite_id",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         invite = response.parse()
-        assert_matches_type(InviteAcceptResponse, invite, path=["response"])
+        assert_matches_type(InviteAcceptResponse, invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_accept(self, client: LlamaCloudAdmin) -> None:
         with client.invites.with_streaming_response.accept(
             "invite_id",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             invite = response.parse()
-            assert_matches_type(InviteAcceptResponse, invite, path=["response"])
+            assert_matches_type(InviteAcceptResponse, invite, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -56,9 +64,9 @@ class TestInvites:
     @parametrize
     def test_path_params_accept(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `invite_id` but received ''"):
-            client.invites.with_raw_response.accept(
-                "",
-            )
+          client.invites.with_raw_response.accept(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -71,12 +79,13 @@ class TestInvites:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_decline(self, client: LlamaCloudAdmin) -> None:
+
         response = client.invites.with_raw_response.decline(
             "invite_id",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         invite = response.parse()
         assert invite is None
 
@@ -85,9 +94,9 @@ class TestInvites:
     def test_streaming_response_decline(self, client: LlamaCloudAdmin) -> None:
         with client.invites.with_streaming_response.decline(
             "invite_id",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             invite = response.parse()
             assert invite is None
@@ -98,15 +107,15 @@ class TestInvites:
     @parametrize
     def test_path_params_decline(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `invite_id` but received ''"):
-            client.invites.with_raw_response.decline(
-                "",
-            )
+          client.invites.with_raw_response.decline(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_mine(self, client: LlamaCloudAdmin) -> None:
         invite = client.invites.list_mine()
-        assert_matches_type(SyncPaginatedCursor[Invite], invite, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Invite], invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -115,35 +124,33 @@ class TestInvites:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(SyncPaginatedCursor[Invite], invite, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Invite], invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_mine(self, client: LlamaCloudAdmin) -> None:
+
         response = client.invites.with_raw_response.list_mine()
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         invite = response.parse()
-        assert_matches_type(SyncPaginatedCursor[Invite], invite, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Invite], invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_mine(self, client: LlamaCloudAdmin) -> None:
-        with client.invites.with_streaming_response.list_mine() as response:
+        with client.invites.with_streaming_response.list_mine() as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             invite = response.parse()
-            assert_matches_type(SyncPaginatedCursor[Invite], invite, path=["response"])
+            assert_matches_type(SyncPaginatedCursor[Invite], invite, path=['response'])
 
         assert cast(Any, response.is_closed) is True
-
-
 class TestAsyncInvites:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
+    parametrize = pytest.mark.parametrize("async_client", [False, True, {'http_client': 'aiohttp'}], indirect=True, ids=['loose', 'strict', 'aiohttp'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -151,31 +158,32 @@ class TestAsyncInvites:
         invite = await async_client.invites.accept(
             "invite_id",
         )
-        assert_matches_type(InviteAcceptResponse, invite, path=["response"])
+        assert_matches_type(InviteAcceptResponse, invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_accept(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.invites.with_raw_response.accept(
             "invite_id",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         invite = await response.parse()
-        assert_matches_type(InviteAcceptResponse, invite, path=["response"])
+        assert_matches_type(InviteAcceptResponse, invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_accept(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.invites.with_streaming_response.accept(
             "invite_id",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             invite = await response.parse()
-            assert_matches_type(InviteAcceptResponse, invite, path=["response"])
+            assert_matches_type(InviteAcceptResponse, invite, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -183,9 +191,9 @@ class TestAsyncInvites:
     @parametrize
     async def test_path_params_accept(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `invite_id` but received ''"):
-            await async_client.invites.with_raw_response.accept(
-                "",
-            )
+          await async_client.invites.with_raw_response.accept(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -198,12 +206,13 @@ class TestAsyncInvites:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_decline(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.invites.with_raw_response.decline(
             "invite_id",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         invite = await response.parse()
         assert invite is None
 
@@ -212,9 +221,9 @@ class TestAsyncInvites:
     async def test_streaming_response_decline(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.invites.with_streaming_response.decline(
             "invite_id",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             invite = await response.parse()
             assert invite is None
@@ -225,15 +234,15 @@ class TestAsyncInvites:
     @parametrize
     async def test_path_params_decline(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `invite_id` but received ''"):
-            await async_client.invites.with_raw_response.decline(
-                "",
-            )
+          await async_client.invites.with_raw_response.decline(
+              "",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_mine(self, async_client: AsyncLlamaCloudAdmin) -> None:
         invite = await async_client.invites.list_mine()
-        assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -242,26 +251,27 @@ class TestAsyncInvites:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_mine(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.invites.with_raw_response.list_mine()
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         invite = await response.parse()
-        assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_mine(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        async with async_client.invites.with_streaming_response.list_mine() as response:
+        async with async_client.invites.with_streaming_response.list_mine() as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             invite = await response.parse()
-            assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=["response"])
+            assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=['response'])
 
         assert cast(Any, response.is_closed) is True

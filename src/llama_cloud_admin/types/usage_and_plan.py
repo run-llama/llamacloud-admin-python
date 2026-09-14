@@ -1,22 +1,14 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from datetime import datetime
-from typing_extensions import Literal
-
 from .._models import BaseModel
 
-__all__ = [
-    "UsageAndPlan",
-    "Plan",
-    "PlanLimits",
-    "PlanCurrentBillingPeriod",
-    "PlanRecurringCredit",
-    "PlanRecurringCreditCreditType",
-    "Usage",
-    "UsageActiveFreeCreditsUsage",
-]
+from typing import Optional, List
 
+from datetime import datetime
+
+from typing_extensions import Literal
+
+__all__ = ["UsageAndPlan", "Plan", "PlanLimits", "PlanCurrentBillingPeriod", "PlanRecurringCredit", "PlanRecurringCreditCreditType", "Usage", "UsageActiveFreeCreditsUsage"]
 
 class PlanLimits(BaseModel):
     allow_pay_as_you_go: bool
@@ -75,20 +67,16 @@ class PlanLimits(BaseModel):
     spending_soft_alerts_usd_cents: Optional[List[int]] = None
     """The amount of USD cents at which a soft alert should be triggered"""
 
-
 class PlanCurrentBillingPeriod(BaseModel):
     """The current billing period"""
-
     end_date: datetime
 
     start_date: datetime
-
 
 class PlanRecurringCreditCreditType(BaseModel):
     id: str
 
     name: str
-
 
 class PlanRecurringCredit(BaseModel):
     credit_amount: int
@@ -111,27 +99,10 @@ class PlanRecurringCredit(BaseModel):
     periods_duration: Optional[float] = None
     """How many billing periods the credit grant will last for"""
 
-
 class Plan(BaseModel):
     limits: PlanLimits
 
-    name: Literal[
-        "enterprise",
-        "enterprise_contract",
-        "enterprise_poc",
-        "free",
-        "free_contract",
-        "free_v1",
-        "free_v2",
-        "llama_parse",
-        "pro",
-        "pro_v1",
-        "pro_v2",
-        "starter_v1",
-        "starter_v2",
-        "unknown",
-        "yc_deal_v1",
-    ]
+    name: Literal["enterprise", "enterprise_contract", "enterprise_poc", "free", "free_contract", "free_v1", "free_v2", "llama_parse", "pro", "pro_v1", "pro_v2", "starter_v1", "starter_v2", "unknown", "yc_deal_v1"]
 
     plan_frequency: Literal["ANNUAL", "MONTHLY", "QUARTERLY"]
 
@@ -155,7 +126,6 @@ class Plan(BaseModel):
     starting_on: Optional[datetime] = None
     """The date the plan starts on"""
 
-
 class UsageActiveFreeCreditsUsage(BaseModel):
     expires_at: datetime
 
@@ -165,29 +135,15 @@ class UsageActiveFreeCreditsUsage(BaseModel):
 
     starting_balance: int
 
-
 class Usage(BaseModel):
     """Account usage totals shown alongside the plan."""
-
-    active_alerts: Optional[
-        List[
-            Literal[
-                "configured_spend_limit_exceeded",
-                "free_credits_exhausted",
-                "has_spending_alert",
-                "internal_spending_alert",
-                "plan_spend_limit_exceeded",
-                "plan_spend_limit_soft_alert",
-            ]
-        ]
-    ] = None
+    active_alerts: Optional[List[Literal["configured_spend_limit_exceeded", "free_credits_exhausted", "has_spending_alert", "internal_spending_alert", "plan_spend_limit_exceeded", "plan_spend_limit_soft_alert"]]] = None
 
     active_free_credits_usage: Optional[List[UsageActiveFreeCreditsUsage]] = None
 
     current_invoice_total_usd_cents: Optional[int] = None
 
     total_users: Optional[int] = None
-
 
 class UsageAndPlan(BaseModel):
     plan: Plan

@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import Literal, TypedDict
+from typing_extensions import TypedDict, Literal
 
 from .._types import SequenceNotStr
 
-__all__ = ["APIKeyListParams"]
+from typing import Optional
 
+__all__ = ["APIKeyListParams"]
 
 class APIKeyListParams(TypedDict, total=False):
     expand: SequenceNotStr[str]

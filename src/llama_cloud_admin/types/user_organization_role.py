@@ -1,17 +1,17 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from datetime import datetime
+from .._models import BaseModel
 
 from .role import Role
-from .._models import BaseModel
+
+from typing import Optional, List
+
+from datetime import datetime
 
 __all__ = ["UserOrganizationRole"]
 
-
 class UserOrganizationRole(BaseModel):
     """Schema for a user's role in an organization."""
-
     id: str
     """Unique identifier"""
 

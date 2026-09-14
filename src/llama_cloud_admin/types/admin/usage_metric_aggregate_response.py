@@ -1,16 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Union
-from typing_extensions import Literal
-
 from ..._models import BaseModel
+
+from typing import Dict, Union, List
+
+from typing_extensions import Literal
 
 __all__ = ["UsageMetricAggregateResponse", "Bucket"]
 
-
 class Bucket(BaseModel):
     """A single aggregation bucket grouped by the requested dimensions."""
-
     dimensions: Dict[str, str]
     """The dimension values that define this bucket"""
 
@@ -23,10 +22,8 @@ class Bucket(BaseModel):
     total_value: int
     """Total of the metric `value` field in this bucket"""
 
-
 class UsageMetricAggregateResponse(BaseModel):
     """Response containing usage metrics aggregated by one or more dimensions."""
-
     buckets: List[Bucket]
     """The aggregation buckets, ordered by total credits descending"""
 

@@ -1,17 +1,17 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Optional
-from datetime import datetime
-from typing_extensions import Literal
-
 from .._models import BaseModel
+
+from typing import Optional, Dict
+
+from datetime import datetime
+
+from typing_extensions import Literal
 
 __all__ = ["APIKey"]
 
-
 class APIKey(BaseModel):
     """Schema for an API Key."""
-
     id: str
     """Unique identifier"""
 

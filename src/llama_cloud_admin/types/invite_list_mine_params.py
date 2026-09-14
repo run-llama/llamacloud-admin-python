@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["InviteListMineParams"]
+from typing import Optional
 
+__all__ = ["InviteListMineParams"]
 
 class InviteListMineParams(TypedDict, total=False):
     page_size: Optional[int]

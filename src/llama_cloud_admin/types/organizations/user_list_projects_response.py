@@ -1,17 +1,17 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from datetime import datetime
-from typing_extensions import TypeAlias
-
 from ..._models import BaseModel
+
+from typing import Optional, List
+
+from datetime import datetime
+
+from typing_extensions import TypeAliasType, TypeAlias
 
 __all__ = ["UserListProjectsResponse", "UserListProjectsResponseItem"]
 
-
 class UserListProjectsResponseItem(BaseModel):
     """Schema for a project."""
-
     id: str
     """Unique identifier"""
 
@@ -28,6 +28,5 @@ class UserListProjectsResponseItem(BaseModel):
 
     updated_at: Optional[datetime] = None
     """Update datetime"""
-
 
 UserListProjectsResponse: TypeAlias = List[UserListProjectsResponseItem]
