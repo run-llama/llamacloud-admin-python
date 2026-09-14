@@ -35,10 +35,12 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import admin, invites, projects, organizations
+    from .resources import admin, invites, api_keys, projects, organizations, quota_management
     from .resources.invites import InvitesResource, AsyncInvitesResource
+    from .resources.api_keys import APIKeysResource, AsyncAPIKeysResource
     from .resources.projects import ProjectsResource, AsyncProjectsResource
     from .resources.admin.admin import AdminResource, AsyncAdminResource
+    from .resources.quota_management import QuotaManagementResource, AsyncQuotaManagementResource
     from .resources.organizations.organizations import OrganizationsResource, AsyncOrganizationsResource
 
 __all__ = [
@@ -134,6 +136,18 @@ class LlamaCloudAdmin(SyncAPIClient):
         from .resources.invites import InvitesResource
 
         return InvitesResource(self)
+
+    @cached_property
+    def api_keys(self) -> APIKeysResource:
+        from .resources.api_keys import APIKeysResource
+
+        return APIKeysResource(self)
+
+    @cached_property
+    def quota_management(self) -> QuotaManagementResource:
+        from .resources.quota_management import QuotaManagementResource
+
+        return QuotaManagementResource(self)
 
     @cached_property
     def admin(self) -> AdminResource:
@@ -337,6 +351,18 @@ class AsyncLlamaCloudAdmin(AsyncAPIClient):
         return AsyncInvitesResource(self)
 
     @cached_property
+    def api_keys(self) -> AsyncAPIKeysResource:
+        from .resources.api_keys import AsyncAPIKeysResource
+
+        return AsyncAPIKeysResource(self)
+
+    @cached_property
+    def quota_management(self) -> AsyncQuotaManagementResource:
+        from .resources.quota_management import AsyncQuotaManagementResource
+
+        return AsyncQuotaManagementResource(self)
+
+    @cached_property
     def admin(self) -> AsyncAdminResource:
         from .resources.admin import AsyncAdminResource
 
@@ -480,6 +506,18 @@ class LlamaCloudAdminWithRawResponse:
         return InvitesResourceWithRawResponse(self._client.invites)
 
     @cached_property
+    def api_keys(self) -> api_keys.APIKeysResourceWithRawResponse:
+        from .resources.api_keys import APIKeysResourceWithRawResponse
+
+        return APIKeysResourceWithRawResponse(self._client.api_keys)
+
+    @cached_property
+    def quota_management(self) -> quota_management.QuotaManagementResourceWithRawResponse:
+        from .resources.quota_management import QuotaManagementResourceWithRawResponse
+
+        return QuotaManagementResourceWithRawResponse(self._client.quota_management)
+
+    @cached_property
     def admin(self) -> admin.AdminResourceWithRawResponse:
         from .resources.admin import AdminResourceWithRawResponse
 
@@ -509,6 +547,18 @@ class AsyncLlamaCloudAdminWithRawResponse:
         from .resources.invites import AsyncInvitesResourceWithRawResponse
 
         return AsyncInvitesResourceWithRawResponse(self._client.invites)
+
+    @cached_property
+    def api_keys(self) -> api_keys.AsyncAPIKeysResourceWithRawResponse:
+        from .resources.api_keys import AsyncAPIKeysResourceWithRawResponse
+
+        return AsyncAPIKeysResourceWithRawResponse(self._client.api_keys)
+
+    @cached_property
+    def quota_management(self) -> quota_management.AsyncQuotaManagementResourceWithRawResponse:
+        from .resources.quota_management import AsyncQuotaManagementResourceWithRawResponse
+
+        return AsyncQuotaManagementResourceWithRawResponse(self._client.quota_management)
 
     @cached_property
     def admin(self) -> admin.AsyncAdminResourceWithRawResponse:
@@ -542,6 +592,18 @@ class LlamaCloudAdminWithStreamedResponse:
         return InvitesResourceWithStreamingResponse(self._client.invites)
 
     @cached_property
+    def api_keys(self) -> api_keys.APIKeysResourceWithStreamingResponse:
+        from .resources.api_keys import APIKeysResourceWithStreamingResponse
+
+        return APIKeysResourceWithStreamingResponse(self._client.api_keys)
+
+    @cached_property
+    def quota_management(self) -> quota_management.QuotaManagementResourceWithStreamingResponse:
+        from .resources.quota_management import QuotaManagementResourceWithStreamingResponse
+
+        return QuotaManagementResourceWithStreamingResponse(self._client.quota_management)
+
+    @cached_property
     def admin(self) -> admin.AdminResourceWithStreamingResponse:
         from .resources.admin import AdminResourceWithStreamingResponse
 
@@ -571,6 +633,18 @@ class AsyncLlamaCloudAdminWithStreamedResponse:
         from .resources.invites import AsyncInvitesResourceWithStreamingResponse
 
         return AsyncInvitesResourceWithStreamingResponse(self._client.invites)
+
+    @cached_property
+    def api_keys(self) -> api_keys.AsyncAPIKeysResourceWithStreamingResponse:
+        from .resources.api_keys import AsyncAPIKeysResourceWithStreamingResponse
+
+        return AsyncAPIKeysResourceWithStreamingResponse(self._client.api_keys)
+
+    @cached_property
+    def quota_management(self) -> quota_management.AsyncQuotaManagementResourceWithStreamingResponse:
+        from .resources.quota_management import AsyncQuotaManagementResourceWithStreamingResponse
+
+        return AsyncQuotaManagementResourceWithStreamingResponse(self._client.quota_management)
 
     @cached_property
     def admin(self) -> admin.AsyncAdminResourceWithStreamingResponse:
