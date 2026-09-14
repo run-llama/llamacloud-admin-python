@@ -2,27 +2,31 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
-from typing_extensions import Literal
-
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
-from ...types.admin import usage_metric_aggregate_params
-from ..._base_client import make_request_options
+
+from ..._compat import cached_property
+
 from ...types.admin.usage_metric_aggregate_response import UsageMetricAggregateResponse
 
-__all__ = ["UsageMetricsResource", "AsyncUsageMetricsResource"]
+from ..._base_client import make_request_options
 
+from ..._utils import maybe_transform, async_maybe_transform
+
+from ..._types import SequenceNotStr, Omit, omit, NotGiven
+
+from typing import Optional, List
+
+from typing_extensions import Literal
+
+from ..._response import to_raw_response_wrapper, async_to_raw_response_wrapper, to_streamed_response_wrapper, async_to_streamed_response_wrapper
+
+from typing_extensions import Literal, overload
+from ..._types import Timeout, Headers, NotGiven, not_given, Omit, omit, NoneType, Query, Body
+from ...types.admin import usage_metric_aggregate_params
+
+__all__ = ["UsageMetricsResource", "AsyncUsageMetricsResource"]
 
 class UsageMetricsResource(SyncAPIResource):
     @cached_property
@@ -44,59 +48,21 @@ class UsageMetricsResource(SyncAPIResource):
         """
         return UsageMetricsResourceWithStreamingResponse(self)
 
-    def aggregate(
-        self,
-        *,
-        day_on_or_after: str,
-        day_on_or_before: str,
-        group_by: SequenceNotStr[str],
-        event_types: Optional[
-            List[
-                Literal[
-                    "audio_seconds_parsed",
-                    "chart_parsing_agentic",
-                    "chart_parsing_efficient",
-                    "chart_parsing_plus",
-                    "chat_message_sent",
-                    "confidence_score_high",
-                    "directory_count_snapshot",
-                    "directory_file_count_snapshot",
-                    "directory_files_exported",
-                    "directory_files_ingested",
-                    "directory_pages_exported",
-                    "extraction_num_pages",
-                    "form_parsing_pages",
-                    "image_classified",
-                    "index_retrieve_query",
-                    "layout_aware_chart_extraction",
-                    "layout_aware_parsing",
-                    "layout_extracted",
-                    "pages_classified",
-                    "pages_embedded",
-                    "pages_indexed",
-                    "pages_parsed",
-                    "pages_split",
-                    "pages_verified",
-                    "precise_bbox_extraction",
-                    "set_total_indexes",
-                    "set_total_pages_indexed",
-                    "spreadsheet_regions_extracted",
-                    "stored_file_count",
-                    "stored_file_mb",
-                ]
-            ]
-        ]
-        | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        user_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageMetricAggregateResponse:
+    def aggregate(self,
+    *,
+    day_on_or_after: str,
+    day_on_or_before: str,
+    group_by: SequenceNotStr[str],
+    event_types: Optional[List[Literal["audio_seconds_parsed", "chart_parsing_agentic", "chart_parsing_efficient", "chart_parsing_plus", "chat_message_sent", "confidence_score_high", "directory_count_snapshot", "directory_file_count_snapshot", "directory_files_exported", "directory_files_ingested", "directory_pages_exported", "extraction_num_pages", "form_parsing_pages", "image_classified", "index_retrieve_query", "layout_aware_chart_extraction", "layout_aware_parsing", "layout_extracted", "pages_classified", "pages_embedded", "pages_indexed", "pages_parsed", "pages_split", "pages_verified", "precise_bbox_extraction", "set_total_indexes", "set_total_pages_indexed", "spreadsheet_regions_extracted", "stored_file_count", "stored_file_mb"]]] | Omit = omit,
+    organization_id: Optional[str] | Omit = omit,
+    project_id: Optional[str] | Omit = omit,
+    user_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UsageMetricAggregateResponse:
         """
         Aggregate usage metrics by one or more dimensions, reporting total credits used.
         Global admin only.
@@ -133,27 +99,17 @@ class UsageMetricsResource(SyncAPIResource):
         """
         return self._get(
             "/api/v1/admin/usage-metrics/aggregate",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "day_on_or_after": day_on_or_after,
-                        "day_on_or_before": day_on_or_before,
-                        "group_by": group_by,
-                        "event_types": event_types,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                        "user_id": user_id,
-                    },
-                    usage_metric_aggregate_params.UsageMetricAggregateParams,
-                ),
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=maybe_transform({
+                "day_on_or_after": day_on_or_after,
+                "day_on_or_before": day_on_or_before,
+                "group_by": group_by,
+                "event_types": event_types,
+                "organization_id": organization_id,
+                "project_id": project_id,
+                "user_id": user_id,
+            }, usage_metric_aggregate_params.UsageMetricAggregateParams)),
             cast_to=UsageMetricAggregateResponse,
         )
-
 
 class AsyncUsageMetricsResource(AsyncAPIResource):
     @cached_property
@@ -175,59 +131,21 @@ class AsyncUsageMetricsResource(AsyncAPIResource):
         """
         return AsyncUsageMetricsResourceWithStreamingResponse(self)
 
-    async def aggregate(
-        self,
-        *,
-        day_on_or_after: str,
-        day_on_or_before: str,
-        group_by: SequenceNotStr[str],
-        event_types: Optional[
-            List[
-                Literal[
-                    "audio_seconds_parsed",
-                    "chart_parsing_agentic",
-                    "chart_parsing_efficient",
-                    "chart_parsing_plus",
-                    "chat_message_sent",
-                    "confidence_score_high",
-                    "directory_count_snapshot",
-                    "directory_file_count_snapshot",
-                    "directory_files_exported",
-                    "directory_files_ingested",
-                    "directory_pages_exported",
-                    "extraction_num_pages",
-                    "form_parsing_pages",
-                    "image_classified",
-                    "index_retrieve_query",
-                    "layout_aware_chart_extraction",
-                    "layout_aware_parsing",
-                    "layout_extracted",
-                    "pages_classified",
-                    "pages_embedded",
-                    "pages_indexed",
-                    "pages_parsed",
-                    "pages_split",
-                    "pages_verified",
-                    "precise_bbox_extraction",
-                    "set_total_indexes",
-                    "set_total_pages_indexed",
-                    "spreadsheet_regions_extracted",
-                    "stored_file_count",
-                    "stored_file_mb",
-                ]
-            ]
-        ]
-        | Omit = omit,
-        organization_id: Optional[str] | Omit = omit,
-        project_id: Optional[str] | Omit = omit,
-        user_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UsageMetricAggregateResponse:
+    async def aggregate(self,
+    *,
+    day_on_or_after: str,
+    day_on_or_before: str,
+    group_by: SequenceNotStr[str],
+    event_types: Optional[List[Literal["audio_seconds_parsed", "chart_parsing_agentic", "chart_parsing_efficient", "chart_parsing_plus", "chat_message_sent", "confidence_score_high", "directory_count_snapshot", "directory_file_count_snapshot", "directory_files_exported", "directory_files_ingested", "directory_pages_exported", "extraction_num_pages", "form_parsing_pages", "image_classified", "index_retrieve_query", "layout_aware_chart_extraction", "layout_aware_parsing", "layout_extracted", "pages_classified", "pages_embedded", "pages_indexed", "pages_parsed", "pages_split", "pages_verified", "precise_bbox_extraction", "set_total_indexes", "set_total_pages_indexed", "spreadsheet_regions_extracted", "stored_file_count", "stored_file_mb"]]] | Omit = omit,
+    organization_id: Optional[str] | Omit = omit,
+    project_id: Optional[str] | Omit = omit,
+    user_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UsageMetricAggregateResponse:
         """
         Aggregate usage metrics by one or more dimensions, reporting total credits used.
         Global admin only.
@@ -264,27 +182,17 @@ class AsyncUsageMetricsResource(AsyncAPIResource):
         """
         return await self._get(
             "/api/v1/admin/usage-metrics/aggregate",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "day_on_or_after": day_on_or_after,
-                        "day_on_or_before": day_on_or_before,
-                        "group_by": group_by,
-                        "event_types": event_types,
-                        "organization_id": organization_id,
-                        "project_id": project_id,
-                        "user_id": user_id,
-                    },
-                    usage_metric_aggregate_params.UsageMetricAggregateParams,
-                ),
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=await async_maybe_transform({
+                "day_on_or_after": day_on_or_after,
+                "day_on_or_before": day_on_or_before,
+                "group_by": group_by,
+                "event_types": event_types,
+                "organization_id": organization_id,
+                "project_id": project_id,
+                "user_id": user_id,
+            }, usage_metric_aggregate_params.UsageMetricAggregateParams)),
             cast_to=UsageMetricAggregateResponse,
         )
-
 
 class UsageMetricsResourceWithRawResponse:
     def __init__(self, usage_metrics: UsageMetricsResource) -> None:
@@ -294,7 +202,6 @@ class UsageMetricsResourceWithRawResponse:
             usage_metrics.aggregate,
         )
 
-
 class AsyncUsageMetricsResourceWithRawResponse:
     def __init__(self, usage_metrics: AsyncUsageMetricsResource) -> None:
         self._usage_metrics = usage_metrics
@@ -303,7 +210,6 @@ class AsyncUsageMetricsResourceWithRawResponse:
             usage_metrics.aggregate,
         )
 
-
 class UsageMetricsResourceWithStreamingResponse:
     def __init__(self, usage_metrics: UsageMetricsResource) -> None:
         self._usage_metrics = usage_metrics
@@ -311,7 +217,6 @@ class UsageMetricsResourceWithStreamingResponse:
         self.aggregate = to_streamed_response_wrapper(
             usage_metrics.aggregate,
         )
-
 
 class AsyncUsageMetricsResourceWithStreamingResponse:
     def __init__(self, usage_metrics: AsyncUsageMetricsResource) -> None:

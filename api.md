@@ -3,13 +3,7 @@
 Types:
 
 ```python
-from llama_cloud_admin.types import (
-    Organization,
-    OrganizationMember,
-    Role,
-    UsageAndPlan,
-    UserOrganizationRole,
-)
+from llama_cloud_admin.types import Organization, OrganizationMember, Role, UsageAndPlan, UserOrganizationRole
 ```
 
 Methods:
@@ -26,11 +20,7 @@ Methods:
 Types:
 
 ```python
-from llama_cloud_admin.types.organizations import (
-    UserAddResponse,
-    UserListMembersResponse,
-    UserListProjectsResponse,
-)
+from llama_cloud_admin.types.organizations import UserAddResponse, UserListMembersResponse, UserListProjectsResponse
 ```
 
 Methods:
@@ -85,18 +75,40 @@ Methods:
 - <code title="delete /api/v2/invites/{invite_id}">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">decline</a>(invite_id) -> None</code>
 - <code title="get /api/v2/invites">client.invites.<a href="./src/llama_cloud_admin/resources/invites.py">list_mine</a>(\*\*<a href="src/llama_cloud_admin/types/invite_list_mine_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/invite.py">SyncPaginatedCursor[Invite]</a></code>
 
+# APIKeys
+
+Types:
+
+```python
+from llama_cloud_admin.types import APIKey
+```
+
+Methods:
+
+- <code title="post /api/v1/beta/api-keys">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">create</a>(\*\*<a href="src/llama_cloud_admin/types/api_key_create_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/api_key.py">APIKey</a></code>
+- <code title="get /api/v1/beta/api-keys">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/api_key_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/api_key.py">SyncPaginatedCursor[APIKey]</a></code>
+- <code title="delete /api/v1/beta/api-keys/{api_key_id}">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">delete</a>(api_key_id) -> None</code>
+
+# QuotaManagement
+
+Types:
+
+```python
+from llama_cloud_admin.types import QuotaConfiguration
+```
+
+Methods:
+
+- <code title="post /api/v1/beta/quota-management">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">create</a>(\*\*<a href="src/llama_cloud_admin/types/quota_management_create_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/quota_configuration.py">QuotaConfiguration</a></code>
+- <code title="get /api/v1/beta/quota-management">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/quota_management_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/quota_configuration.py">SyncPaginatedPageNumber[QuotaConfiguration]</a></code>
+- <code title="delete /api/v1/beta/quota-management/{quota_id}">client.quota_management.<a href="./src/llama_cloud_admin/resources/quota_management.py">delete</a>(quota_id, \*\*<a href="src/llama_cloud_admin/types/quota_management_delete_params.py">params</a>) -> None</code>
+
 # Admin
 
 Types:
 
 ```python
-from llama_cloud_admin.types import (
-    AdminGetFilestoresInfoResponse,
-    AdminGetLicenseInfoResponse,
-    AdminGetLlamaextractFeaturesResponse,
-    AdminGetLlmsInfoResponse,
-    AdminGetOcrStatusResponse,
-)
+from llama_cloud_admin.types import AdminGetFilestoresInfoResponse, AdminGetLicenseInfoResponse, AdminGetLlamaextractFeaturesResponse, AdminGetLlmsInfoResponse, AdminGetOcrStatusResponse
 ```
 
 Methods:

@@ -6,7 +6,6 @@ from typing_extensions import TypedDict
 
 __all__ = ["AdminGetLicenseInfoParams"]
 
-
 class AdminGetLicenseInfoParams(TypedDict, total=False):
     include_scopes: bool
     """Whether to include scopes in the response"""

@@ -2,23 +2,32 @@
 
 from __future__ import annotations
 
-import os
-from typing import Any, cast
-
-import pytest
-
-from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
-from llama_cloud_admin.types import (
-    Project,
-)
+
+from llama_cloud_admin.types import Project
+
+from typing import cast, Any
+
 from llama_cloud_admin.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
+
+import os
+import pytest
+import httpx
+from typing_extensions import get_args
+from respx import MockRouter
+from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
+from tests.utils import assert_matches_type
+from llama_cloud_admin.types import project_create_params
+from llama_cloud_admin.types import project_update_params
+from llama_cloud_admin.types import project_list_params
+from llama_cloud_admin.types import project_delete_params
+from llama_cloud_admin.types import project_get_params
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-
 class TestProjects:
-    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=['loose', 'strict'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -27,20 +36,21 @@ class TestProjects:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: LlamaCloudAdmin) -> None:
+
         response = client.projects.with_raw_response.create(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = response.parse()
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -48,12 +58,12 @@ class TestProjects:
         with client.projects.with_streaming_response.create(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = response.parse()
-            assert_matches_type(Project, project, path=["response"])
+            assert_matches_type(Project, project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -64,7 +74,7 @@ class TestProjects:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -74,20 +84,21 @@ class TestProjects:
             name="x",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: LlamaCloudAdmin) -> None:
+
         response = client.projects.with_raw_response.update(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = response.parse()
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -95,12 +106,12 @@ class TestProjects:
         with client.projects.with_streaming_response.update(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = response.parse()
-            assert_matches_type(Project, project, path=["response"])
+            assert_matches_type(Project, project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -108,16 +119,16 @@ class TestProjects:
     @parametrize
     def test_path_params_update(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            client.projects.with_raw_response.update(
-                project_id="",
-                name="x",
-            )
+          client.projects.with_raw_response.update(
+              project_id="",
+              name="x",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: LlamaCloudAdmin) -> None:
         project = client.projects.list()
-        assert_matches_type(SyncPaginatedCursor[Project], project, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Project], project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -128,27 +139,28 @@ class TestProjects:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(SyncPaginatedCursor[Project], project, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Project], project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: LlamaCloudAdmin) -> None:
+
         response = client.projects.with_raw_response.list()
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = response.parse()
-        assert_matches_type(SyncPaginatedCursor[Project], project, path=["response"])
+        assert_matches_type(SyncPaginatedCursor[Project], project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: LlamaCloudAdmin) -> None:
-        with client.projects.with_streaming_response.list() as response:
+        with client.projects.with_streaming_response.list() as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = response.parse()
-            assert_matches_type(SyncPaginatedCursor[Project], project, path=["response"])
+            assert_matches_type(SyncPaginatedCursor[Project], project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -172,12 +184,13 @@ class TestProjects:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: LlamaCloudAdmin) -> None:
+
         response = client.projects.with_raw_response.delete(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = response.parse()
         assert project is None
 
@@ -186,9 +199,9 @@ class TestProjects:
     def test_streaming_response_delete(self, client: LlamaCloudAdmin) -> None:
         with client.projects.with_streaming_response.delete(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = response.parse()
             assert project is None
@@ -199,9 +212,9 @@ class TestProjects:
     @parametrize
     def test_path_params_delete(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            client.projects.with_raw_response.delete(
-                project_id="",
-            )
+          client.projects.with_raw_response.delete(
+              project_id="",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -209,7 +222,7 @@ class TestProjects:
         project = client.projects.get(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -218,31 +231,32 @@ class TestProjects:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get(self, client: LlamaCloudAdmin) -> None:
+
         response = client.projects.with_raw_response.get(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = response.parse()
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get(self, client: LlamaCloudAdmin) -> None:
         with client.projects.with_streaming_response.get(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = response.parse()
-            assert_matches_type(Project, project, path=["response"])
+            assert_matches_type(Project, project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -250,15 +264,12 @@ class TestProjects:
     @parametrize
     def test_path_params_get(self, client: LlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            client.projects.with_raw_response.get(
-                project_id="",
-            )
-
-
+          client.projects.with_raw_response.get(
+              project_id="",
+          )
 class TestAsyncProjects:
-    parametrize = pytest.mark.parametrize(
-        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
-    )
+    parametrize = pytest.mark.parametrize("async_client", [False, True, {'http_client': 'aiohttp'}], indirect=True, ids=['loose', 'strict', 'aiohttp'])
+
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -267,20 +278,21 @@ class TestAsyncProjects:
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.projects.with_raw_response.create(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = await response.parse()
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -288,12 +300,12 @@ class TestAsyncProjects:
         async with async_client.projects.with_streaming_response.create(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = await response.parse()
-            assert_matches_type(Project, project, path=["response"])
+            assert_matches_type(Project, project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -304,7 +316,7 @@ class TestAsyncProjects:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -314,20 +326,21 @@ class TestAsyncProjects:
             name="x",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.projects.with_raw_response.update(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = await response.parse()
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -335,12 +348,12 @@ class TestAsyncProjects:
         async with async_client.projects.with_streaming_response.update(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             name="x",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = await response.parse()
-            assert_matches_type(Project, project, path=["response"])
+            assert_matches_type(Project, project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -348,16 +361,16 @@ class TestAsyncProjects:
     @parametrize
     async def test_path_params_update(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            await async_client.projects.with_raw_response.update(
-                project_id="",
-                name="x",
-            )
+          await async_client.projects.with_raw_response.update(
+              project_id="",
+              name="x",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
         project = await async_client.projects.list()
-        assert_matches_type(AsyncPaginatedCursor[Project], project, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Project], project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -368,27 +381,28 @@ class TestAsyncProjects:
             page_size=0,
             page_token="page_token",
         )
-        assert_matches_type(AsyncPaginatedCursor[Project], project, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Project], project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.projects.with_raw_response.list()
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = await response.parse()
-        assert_matches_type(AsyncPaginatedCursor[Project], project, path=["response"])
+        assert_matches_type(AsyncPaginatedCursor[Project], project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncLlamaCloudAdmin) -> None:
-        async with async_client.projects.with_streaming_response.list() as response:
+        async with async_client.projects.with_streaming_response.list() as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = await response.parse()
-            assert_matches_type(AsyncPaginatedCursor[Project], project, path=["response"])
+            assert_matches_type(AsyncPaginatedCursor[Project], project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -412,12 +426,13 @@ class TestAsyncProjects:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.projects.with_raw_response.delete(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = await response.parse()
         assert project is None
 
@@ -426,9 +441,9 @@ class TestAsyncProjects:
     async def test_streaming_response_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.projects.with_streaming_response.delete(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = await response.parse()
             assert project is None
@@ -439,9 +454,9 @@ class TestAsyncProjects:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            await async_client.projects.with_raw_response.delete(
-                project_id="",
-            )
+          await async_client.projects.with_raw_response.delete(
+              project_id="",
+          )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -449,7 +464,7 @@ class TestAsyncProjects:
         project = await async_client.projects.get(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -458,31 +473,32 @@ class TestAsyncProjects:
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncLlamaCloudAdmin) -> None:
+
         response = await async_client.projects.with_raw_response.get(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
         project = await response.parse()
-        assert_matches_type(Project, project, path=["response"])
+        assert_matches_type(Project, project, path=['response'])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncLlamaCloudAdmin) -> None:
         async with async_client.projects.with_streaming_response.get(
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-        ) as response:
+        ) as response :
             assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+            assert response.http_request.headers.get('X-Stainless-Lang') == 'python'
 
             project = await response.parse()
-            assert_matches_type(Project, project, path=["response"])
+            assert_matches_type(Project, project, path=['response'])
 
         assert cast(Any, response.is_closed) is True
 
@@ -490,6 +506,6 @@ class TestAsyncProjects:
     @parametrize
     async def test_path_params_get(self, async_client: AsyncLlamaCloudAdmin) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project_id` but received ''"):
-            await async_client.projects.with_raw_response.get(
-                project_id="",
-            )
+          await async_client.projects.with_raw_response.get(
+              project_id="",
+          )

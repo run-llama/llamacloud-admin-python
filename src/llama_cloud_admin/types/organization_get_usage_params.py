@@ -6,6 +6,5 @@ from typing_extensions import TypedDict
 
 __all__ = ["OrganizationGetUsageParams"]
 
-
 class OrganizationGetUsageParams(TypedDict, total=False):
     get_current_invoice_total: bool

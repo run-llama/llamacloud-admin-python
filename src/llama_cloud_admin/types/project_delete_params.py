@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ProjectDeleteParams"]
+from typing import Optional
 
+__all__ = ["ProjectDeleteParams"]
 
 class ProjectDeleteParams(TypedDict, total=False):
     organization_id: Optional[str]

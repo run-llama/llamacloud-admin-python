@@ -1,12 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from typing_extensions import Literal
-
 from .._models import BaseModel
 
-__all__ = ["AdminGetLlamaextractFeaturesResponse", "AvailableMode", "SchemaGeneration"]
+from typing_extensions import Literal
 
+from typing import Optional, List
+
+__all__ = ["AdminGetLlamaextractFeaturesResponse", "AvailableMode", "SchemaGeneration"]
 
 class AvailableMode(BaseModel):
     mode: str
@@ -23,12 +23,10 @@ class AvailableMode(BaseModel):
 
     missing_parse_models: Optional[List[str]] = None
 
-
 class SchemaGeneration(BaseModel):
     model: str
 
     status: Literal["available", "unavailable"]
-
 
 class AdminGetLlamaextractFeaturesResponse(BaseModel):
     available_modes: List[AvailableMode]

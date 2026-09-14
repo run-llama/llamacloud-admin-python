@@ -2,16 +2,14 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
-from typing_extensions import Literal, TypedDict
+from typing_extensions import TypedDict, Literal
+
+from typing import Optional, List
 
 __all__ = ["UserUpdateClaimsParams", "SetClaims"]
 
-
 class UserUpdateClaimsParams(TypedDict, total=False):
-    remove_claims: Optional[
-        List[Literal["allow_org_deletion", "allowed_org_creation", "api_datasource_access", "maximum_org_creation"]]
-    ]
+    remove_claims: Optional[List[Literal["allow_org_deletion", "allowed_org_creation", "api_datasource_access", "maximum_org_creation"]]]
     """Names of claims to reset to their system default."""
 
     set_claims: Optional[SetClaims]
@@ -22,7 +20,6 @@ class UserUpdateClaimsParams(TypedDict, total=False):
     single claim without resending the full claim set.
     """
 
-
 class SetClaims(TypedDict, total=False):
     """A partial set of custom claims for additive updates.
 
@@ -30,7 +27,6 @@ class SetClaims(TypedDict, total=False):
     are added or overwritten; claims left unset are not touched, so callers can
     change a single claim without resending the full claim set.
     """
-
     allow_org_deletion: Optional[bool]
     """Whether the user is allowed to delete organizations."""
 

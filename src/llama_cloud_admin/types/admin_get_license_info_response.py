@@ -1,12 +1,12 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
-from datetime import datetime
-
 from .._models import BaseModel
 
-__all__ = ["AdminGetLicenseInfoResponse"]
+from datetime import datetime
 
+from typing import Optional, List
+
+__all__ = ["AdminGetLicenseInfoResponse"]
 
 class AdminGetLicenseInfoResponse(BaseModel):
     expires_at: datetime

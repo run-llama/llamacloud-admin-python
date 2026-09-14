@@ -2,21 +2,19 @@
 
 from __future__ import annotations
 
+from typing_extensions import TypedDict, Required
+
 from typing import Iterable, Optional
-from typing_extensions import Required, TypedDict
 
 from ..._types import SequenceNotStr
 
 __all__ = ["UserAddParams", "Body"]
 
-
 class UserAddParams(TypedDict, total=False):
     body: Required[Iterable[Body]]
 
-
 class Body(TypedDict, total=False):
     """Request to add a user to an organization."""
-
     project_ids: Required[Optional[SequenceNotStr[str]]]
     """The project IDs to add the user to."""
 

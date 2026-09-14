@@ -1,16 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
-from datetime import datetime
-
 from .._models import BaseModel
+
+from typing import Optional
+
+from datetime import datetime
 
 __all__ = ["Project"]
 
-
 class Project(BaseModel):
     """API response schema for a project."""
-
     id: str
     """The project's unique identifier."""
 

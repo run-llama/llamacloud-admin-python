@@ -2,33 +2,40 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
-
 import httpx
 
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import path_template, maybe_transform, async_maybe_transform
-from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
+
+from ..._compat import cached_property
+
+from ..._utils import path_template, maybe_transform, async_maybe_transform
+
+from typing import Optional, Iterable
+
+from ..._types import SequenceNotStr, Omit, omit, NotGiven
+
 from ..._base_client import make_request_options
-from ...types.organizations import (
-    user_add_params,
-    user_assign_role_params,
-    user_add_to_project_params,
-)
-from ...types.user_organization_role import UserOrganizationRole
+
 from ...types.organizations.user_add_response import UserAddResponse
+
+from ...types.user_organization_role import UserOrganizationRole
+
 from ...types.organizations.user_list_members_response import UserListMembersResponse
+
 from ...types.organizations.user_list_projects_response import UserListProjectsResponse
 
-__all__ = ["UsersResource", "AsyncUsersResource"]
+from ..._response import to_raw_response_wrapper, async_to_raw_response_wrapper, to_streamed_response_wrapper, async_to_streamed_response_wrapper
 
+from ...types.organizations import user_add_params
+
+from typing_extensions import Literal, overload
+from ..._types import Timeout, Headers, NotGiven, not_given, Omit, omit, NoneType, Query, Body
+from ...types.organizations import user_delete_params
+from ...types.organizations import user_add_params
+from ...types.organizations import user_add_to_project_params
+from ...types.organizations import user_assign_role_params
+
+__all__ = ["UsersResource", "AsyncUsersResource"]
 
 class UsersResource(SyncAPIResource):
     @cached_property
@@ -50,19 +57,17 @@ class UsersResource(SyncAPIResource):
         """
         return UsersResourceWithStreamingResponse(self)
 
-    def delete(
-        self,
-        member_user_id: str,
-        *,
-        organization_id: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
+    def delete(self,
+    member_user_id: str,
+    *,
+    organization_id: str,
+    body: Optional[SequenceNotStr[str]] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> None:
         """
         Remove users from an organization.
 
@@ -76,35 +81,31 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not member_user_id:
-            raise ValueError(f"Expected a non-empty value for `member_user_id` but received {member_user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `member_user_id` but received {member_user_id!r}'
+          )
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{member_user_id}",
-                organization_id=organization_id,
-                member_user_id=member_user_id,
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{member_user_id}", organization_id=organization_id, member_user_id=member_user_id),
             body=maybe_transform(body, Optional[SequenceNotStr[str]]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=NoneType,
         )
 
-    def add(
-        self,
-        organization_id: str,
-        *,
-        body: Iterable[user_add_params.Body],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserAddResponse:
+    def add(self,
+    organization_id: str,
+    *,
+    body: Iterable[user_add_params.Body],
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserAddResponse:
         """
         Add a user to an organization.
 
@@ -118,29 +119,27 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         return self._put(
             path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
             body=maybe_transform(body, Iterable[user_add_params.Body]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserAddResponse,
         )
 
-    def add_to_project(
-        self,
-        user_id: str,
-        *,
-        organization_id: str,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    def add_to_project(self,
+    user_id: str,
+    *,
+    organization_id: str,
+    project_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> object:
         """
         Add a user to a project.
 
@@ -154,39 +153,33 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `user_id` but received {user_id!r}'
+          )
         return self._put(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{user_id}/projects",
-                organization_id=organization_id,
-                user_id=user_id,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"project_id": project_id}, user_add_to_project_params.UserAddToProjectParams),
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{user_id}/projects", organization_id=organization_id, user_id=user_id),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=maybe_transform({
+                "project_id": project_id
+            }, user_add_to_project_params.UserAddToProjectParams)),
             cast_to=object,
         )
 
-    def assign_role(
-        self,
-        path_organization_id: str,
-        *,
-        body_organization_id: str,
-        role_id: str,
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserOrganizationRole:
+    def assign_role(self,
+    path_organization_id: str,
+    *,
+    body_organization_id: str,
+    role_id: str,
+    user_id: str,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserOrganizationRole:
         """
         Assign a role to a user in an organization.
 
@@ -206,38 +199,29 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not path_organization_id:
-            raise ValueError(
-                f"Expected a non-empty value for `path_organization_id` but received {path_organization_id!r}"
-            )
+          raise ValueError(
+            f'Expected a non-empty value for `path_organization_id` but received {path_organization_id!r}'
+          )
         return self._put(
-            path_template(
-                "/api/v1/organizations/{path_organization_id}/users/roles", path_organization_id=path_organization_id
-            ),
-            body=maybe_transform(
-                {
-                    "body_organization_id": body_organization_id,
-                    "role_id": role_id,
-                    "user_id": user_id,
-                },
-                user_assign_role_params.UserAssignRoleParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            path_template("/api/v1/organizations/{path_organization_id}/users/roles", path_organization_id=path_organization_id),
+            body=maybe_transform({
+                "body_organization_id": body_organization_id,
+                "role_id": role_id,
+                "user_id": user_id,
+            }, user_assign_role_params.UserAssignRoleParams),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserOrganizationRole,
         )
 
-    def list_members(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserListMembersResponse:
+    def list_members(self,
+    organization_id: str,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserListMembersResponse:
         """
         Get all users in an organization.
 
@@ -251,27 +235,25 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         return self._get(
             path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserListMembersResponse,
         )
 
-    def list_projects(
-        self,
-        user_id: str,
-        *,
-        organization_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserListProjectsResponse:
+    def list_projects(self,
+    user_id: str,
+    *,
+    organization_id: str,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserListProjectsResponse:
         """
         List all projects for a user in an organization.
 
@@ -285,34 +267,30 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `user_id` but received {user_id!r}'
+          )
         return self._get(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{user_id}/projects",
-                organization_id=organization_id,
-                user_id=user_id,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{user_id}/projects", organization_id=organization_id, user_id=user_id),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserListProjectsResponse,
         )
 
-    def remove_from_project(
-        self,
-        project_id: str,
-        *,
-        organization_id: str,
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    def remove_from_project(self,
+    project_id: str,
+    *,
+    organization_id: str,
+    user_id: str,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> object:
         """
         Remove a user from a project.
 
@@ -326,24 +304,22 @@ class UsersResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `user_id` but received {user_id!r}'
+          )
         if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `project_id` but received {project_id!r}'
+          )
         return self._delete(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}",
-                organization_id=organization_id,
-                user_id=user_id,
-                project_id=project_id,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}", organization_id=organization_id, user_id=user_id, project_id=project_id),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=object,
         )
-
 
 class AsyncUsersResource(AsyncAPIResource):
     @cached_property
@@ -365,19 +341,17 @@ class AsyncUsersResource(AsyncAPIResource):
         """
         return AsyncUsersResourceWithStreamingResponse(self)
 
-    async def delete(
-        self,
-        member_user_id: str,
-        *,
-        organization_id: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
+    async def delete(self,
+    member_user_id: str,
+    *,
+    organization_id: str,
+    body: Optional[SequenceNotStr[str]] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> None:
         """
         Remove users from an organization.
 
@@ -391,35 +365,31 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not member_user_id:
-            raise ValueError(f"Expected a non-empty value for `member_user_id` but received {member_user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `member_user_id` but received {member_user_id!r}'
+          )
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{member_user_id}",
-                organization_id=organization_id,
-                member_user_id=member_user_id,
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{member_user_id}", organization_id=organization_id, member_user_id=member_user_id),
             body=await async_maybe_transform(body, Optional[SequenceNotStr[str]]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=NoneType,
         )
 
-    async def add(
-        self,
-        organization_id: str,
-        *,
-        body: Iterable[user_add_params.Body],
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserAddResponse:
+    async def add(self,
+    organization_id: str,
+    *,
+    body: Iterable[user_add_params.Body],
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserAddResponse:
         """
         Add a user to an organization.
 
@@ -433,29 +403,27 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         return await self._put(
             path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
             body=await async_maybe_transform(body, Iterable[user_add_params.Body]),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserAddResponse,
         )
 
-    async def add_to_project(
-        self,
-        user_id: str,
-        *,
-        organization_id: str,
-        project_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    async def add_to_project(self,
+    user_id: str,
+    *,
+    organization_id: str,
+    project_id: Optional[str] | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> object:
         """
         Add a user to a project.
 
@@ -469,41 +437,33 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `user_id` but received {user_id!r}'
+          )
         return await self._put(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{user_id}/projects",
-                organization_id=organization_id,
-                user_id=user_id,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"project_id": project_id}, user_add_to_project_params.UserAddToProjectParams
-                ),
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{user_id}/projects", organization_id=organization_id, user_id=user_id),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=await async_maybe_transform({
+                "project_id": project_id
+            }, user_add_to_project_params.UserAddToProjectParams)),
             cast_to=object,
         )
 
-    async def assign_role(
-        self,
-        path_organization_id: str,
-        *,
-        body_organization_id: str,
-        role_id: str,
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserOrganizationRole:
+    async def assign_role(self,
+    path_organization_id: str,
+    *,
+    body_organization_id: str,
+    role_id: str,
+    user_id: str,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserOrganizationRole:
         """
         Assign a role to a user in an organization.
 
@@ -523,38 +483,29 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not path_organization_id:
-            raise ValueError(
-                f"Expected a non-empty value for `path_organization_id` but received {path_organization_id!r}"
-            )
+          raise ValueError(
+            f'Expected a non-empty value for `path_organization_id` but received {path_organization_id!r}'
+          )
         return await self._put(
-            path_template(
-                "/api/v1/organizations/{path_organization_id}/users/roles", path_organization_id=path_organization_id
-            ),
-            body=await async_maybe_transform(
-                {
-                    "body_organization_id": body_organization_id,
-                    "role_id": role_id,
-                    "user_id": user_id,
-                },
-                user_assign_role_params.UserAssignRoleParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            path_template("/api/v1/organizations/{path_organization_id}/users/roles", path_organization_id=path_organization_id),
+            body=await async_maybe_transform({
+                "body_organization_id": body_organization_id,
+                "role_id": role_id,
+                "user_id": user_id,
+            }, user_assign_role_params.UserAssignRoleParams),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserOrganizationRole,
         )
 
-    async def list_members(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserListMembersResponse:
+    async def list_members(self,
+    organization_id: str,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserListMembersResponse:
         """
         Get all users in an organization.
 
@@ -568,27 +519,25 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         return await self._get(
             path_template("/api/v1/organizations/{organization_id}/users", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserListMembersResponse,
         )
 
-    async def list_projects(
-        self,
-        user_id: str,
-        *,
-        organization_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> UserListProjectsResponse:
+    async def list_projects(self,
+    user_id: str,
+    *,
+    organization_id: str,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> UserListProjectsResponse:
         """
         List all projects for a user in an organization.
 
@@ -602,34 +551,30 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `user_id` but received {user_id!r}'
+          )
         return await self._get(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{user_id}/projects",
-                organization_id=organization_id,
-                user_id=user_id,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{user_id}/projects", organization_id=organization_id, user_id=user_id),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=UserListProjectsResponse,
         )
 
-    async def remove_from_project(
-        self,
-        project_id: str,
-        *,
-        organization_id: str,
-        user_id: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    async def remove_from_project(self,
+    project_id: str,
+    *,
+    organization_id: str,
+    user_id: str,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> object:
         """
         Remove a user from a project.
 
@@ -643,24 +588,22 @@ class AsyncUsersResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         if not user_id:
-            raise ValueError(f"Expected a non-empty value for `user_id` but received {user_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `user_id` but received {user_id!r}'
+          )
         if not project_id:
-            raise ValueError(f"Expected a non-empty value for `project_id` but received {project_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `project_id` but received {project_id!r}'
+          )
         return await self._delete(
-            path_template(
-                "/api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}",
-                organization_id=organization_id,
-                user_id=user_id,
-                project_id=project_id,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            path_template("/api/v1/organizations/{organization_id}/users/{user_id}/projects/{project_id}", organization_id=organization_id, user_id=user_id, project_id=project_id),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=object,
         )
-
 
 class UsersResourceWithRawResponse:
     def __init__(self, users: UsersResource) -> None:
@@ -688,7 +631,6 @@ class UsersResourceWithRawResponse:
             users.remove_from_project,
         )
 
-
 class AsyncUsersResourceWithRawResponse:
     def __init__(self, users: AsyncUsersResource) -> None:
         self._users = users
@@ -715,7 +657,6 @@ class AsyncUsersResourceWithRawResponse:
             users.remove_from_project,
         )
 
-
 class UsersResourceWithStreamingResponse:
     def __init__(self, users: UsersResource) -> None:
         self._users = users
@@ -741,7 +682,6 @@ class UsersResourceWithStreamingResponse:
         self.remove_from_project = to_streamed_response_wrapper(
             users.remove_from_project,
         )
-
 
 class AsyncUsersResourceWithStreamingResponse:
     def __init__(self, users: AsyncUsersResource) -> None:

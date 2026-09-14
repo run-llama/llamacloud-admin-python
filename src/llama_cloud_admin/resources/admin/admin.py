@@ -4,42 +4,37 @@ from __future__ import annotations
 
 import httpx
 
-from .users import (
-    UsersResource,
-    AsyncUsersResource,
-    UsersResourceWithRawResponse,
-    AsyncUsersResourceWithRawResponse,
-    UsersResourceWithStreamingResponse,
-    AsyncUsersResourceWithStreamingResponse,
-)
-from ...types import admin_get_license_info_params
-from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
-from .usage_metrics import (
-    UsageMetricsResource,
-    AsyncUsageMetricsResource,
-    UsageMetricsResourceWithRawResponse,
-    AsyncUsageMetricsResourceWithRawResponse,
-    UsageMetricsResourceWithStreamingResponse,
-    AsyncUsageMetricsResourceWithStreamingResponse,
-)
-from ..._base_client import make_request_options
-from ...types.admin_get_llms_info_response import AdminGetLlmsInfoResponse
-from ...types.admin_get_ocr_status_response import AdminGetOcrStatusResponse
-from ...types.admin_get_license_info_response import AdminGetLicenseInfoResponse
+
+from .users import UsersResource, AsyncUsersResource, UsersResourceWithRawResponse, AsyncUsersResourceWithRawResponse, UsersResourceWithStreamingResponse, AsyncUsersResourceWithStreamingResponse
+
+from ..._compat import cached_property
+
+from .usage_metrics import UsageMetricsResource, AsyncUsageMetricsResource, UsageMetricsResourceWithRawResponse, AsyncUsageMetricsResourceWithRawResponse, UsageMetricsResourceWithStreamingResponse, AsyncUsageMetricsResourceWithStreamingResponse
+
 from ...types.admin_get_filestores_info_response import AdminGetFilestoresInfoResponse
+
+from ..._base_client import make_request_options
+
+from ..._types import NotGiven, Omit, omit
+
+from ...types.admin_get_license_info_response import AdminGetLicenseInfoResponse
+
+from ..._utils import maybe_transform, async_maybe_transform
+
 from ...types.admin_get_llamaextract_features_response import AdminGetLlamaextractFeaturesResponse
 
-__all__ = ["AdminResource", "AsyncAdminResource"]
+from ...types.admin_get_llms_info_response import AdminGetLlmsInfoResponse
 
+from ...types.admin_get_ocr_status_response import AdminGetOcrStatusResponse
+
+from ..._response import to_raw_response_wrapper, async_to_raw_response_wrapper, to_streamed_response_wrapper, async_to_streamed_response_wrapper
+
+from typing_extensions import Literal, overload
+from ..._types import Timeout, Headers, NotGiven, not_given, Omit, omit, NoneType, Query, Body
+from ...types import admin_get_license_info_params
+
+__all__ = ["AdminResource", "AsyncAdminResource"]
 
 class AdminResource(SyncAPIResource):
     @cached_property
@@ -69,36 +64,30 @@ class AdminResource(SyncAPIResource):
         """
         return AdminResourceWithStreamingResponse(self)
 
-    def get_filestores_info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetFilestoresInfoResponse:
+    def get_filestores_info(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetFilestoresInfoResponse:
         """Get File Store Info"""
         return self._get(
             "/api/v1/admin/filestores/info",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetFilestoresInfoResponse,
         )
 
-    def get_license_info(
-        self,
-        *,
-        include_scopes: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetLicenseInfoResponse:
+    def get_license_info(self,
+    *,
+    include_scopes: bool | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetLicenseInfoResponse:
         """
         Get License Info
 
@@ -115,75 +104,56 @@ class AdminResource(SyncAPIResource):
         """
         return self._get(
             "/api/v1/admin/license/info",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {"include_scopes": include_scopes}, admin_get_license_info_params.AdminGetLicenseInfoParams
-                ),
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=maybe_transform({
+                "include_scopes": include_scopes
+            }, admin_get_license_info_params.AdminGetLicenseInfoParams)),
             cast_to=AdminGetLicenseInfoResponse,
         )
 
-    def get_llamaextract_features(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetLlamaextractFeaturesResponse:
+    def get_llamaextract_features(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetLlamaextractFeaturesResponse:
         """Get LlamaExtract feature availability based on available models."""
         return self._get(
             "/api/v1/admin/llamaextract/features",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetLlamaextractFeaturesResponse,
         )
 
-    def get_llms_info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetLlmsInfoResponse:
+    def get_llms_info(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetLlmsInfoResponse:
         """Get Llm Info"""
         return self._get(
             "/api/v1/admin/llms/info",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetLlmsInfoResponse,
         )
 
-    def get_ocr_status(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetOcrStatusResponse:
+    def get_ocr_status(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetOcrStatusResponse:
         """Get OCR service health status including GPU availability."""
         return self._get(
             "/api/v1/admin/ocr/statusz",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetOcrStatusResponse,
         )
-
 
 class AsyncAdminResource(AsyncAPIResource):
     @cached_property
@@ -213,36 +183,30 @@ class AsyncAdminResource(AsyncAPIResource):
         """
         return AsyncAdminResourceWithStreamingResponse(self)
 
-    async def get_filestores_info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetFilestoresInfoResponse:
+    async def get_filestores_info(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetFilestoresInfoResponse:
         """Get File Store Info"""
         return await self._get(
             "/api/v1/admin/filestores/info",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetFilestoresInfoResponse,
         )
 
-    async def get_license_info(
-        self,
-        *,
-        include_scopes: bool | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetLicenseInfoResponse:
+    async def get_license_info(self,
+    *,
+    include_scopes: bool | Omit = omit,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetLicenseInfoResponse:
         """
         Get License Info
 
@@ -259,75 +223,56 @@ class AsyncAdminResource(AsyncAPIResource):
         """
         return await self._get(
             "/api/v1/admin/license/info",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"include_scopes": include_scopes}, admin_get_license_info_params.AdminGetLicenseInfoParams
-                ),
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout, query=await async_maybe_transform({
+                "include_scopes": include_scopes
+            }, admin_get_license_info_params.AdminGetLicenseInfoParams)),
             cast_to=AdminGetLicenseInfoResponse,
         )
 
-    async def get_llamaextract_features(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetLlamaextractFeaturesResponse:
+    async def get_llamaextract_features(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetLlamaextractFeaturesResponse:
         """Get LlamaExtract feature availability based on available models."""
         return await self._get(
             "/api/v1/admin/llamaextract/features",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetLlamaextractFeaturesResponse,
         )
 
-    async def get_llms_info(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetLlmsInfoResponse:
+    async def get_llms_info(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetLlmsInfoResponse:
         """Get Llm Info"""
         return await self._get(
             "/api/v1/admin/llms/info",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetLlmsInfoResponse,
         )
 
-    async def get_ocr_status(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AdminGetOcrStatusResponse:
+    async def get_ocr_status(self,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> AdminGetOcrStatusResponse:
         """Get OCR service health status including GPU availability."""
         return await self._get(
             "/api/v1/admin/ocr/statusz",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=AdminGetOcrStatusResponse,
         )
-
 
 class AdminResourceWithRawResponse:
     def __init__(self, admin: AdminResource) -> None:
@@ -357,7 +302,6 @@ class AdminResourceWithRawResponse:
     def usage_metrics(self) -> UsageMetricsResourceWithRawResponse:
         return UsageMetricsResourceWithRawResponse(self._admin.usage_metrics)
 
-
 class AsyncAdminResourceWithRawResponse:
     def __init__(self, admin: AsyncAdminResource) -> None:
         self._admin = admin
@@ -386,7 +330,6 @@ class AsyncAdminResourceWithRawResponse:
     def usage_metrics(self) -> AsyncUsageMetricsResourceWithRawResponse:
         return AsyncUsageMetricsResourceWithRawResponse(self._admin.usage_metrics)
 
-
 class AdminResourceWithStreamingResponse:
     def __init__(self, admin: AdminResource) -> None:
         self._admin = admin
@@ -414,7 +357,6 @@ class AdminResourceWithStreamingResponse:
     @cached_property
     def usage_metrics(self) -> UsageMetricsResourceWithStreamingResponse:
         return UsageMetricsResourceWithStreamingResponse(self._admin.usage_metrics)
-
 
 class AsyncAdminResourceWithStreamingResponse:
     def __init__(self, admin: AsyncAdminResource) -> None:

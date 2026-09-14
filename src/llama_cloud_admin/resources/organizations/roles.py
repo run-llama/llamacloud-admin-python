@@ -4,21 +4,24 @@ from __future__ import annotations
 
 import httpx
 
-from ..._types import Body, Query, Headers, NotGiven, not_given
-from ..._utils import path_template
-from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
-from ..._base_client import make_request_options
+
+from ..._compat import cached_property
+
+from ..._utils import path_template
+
 from ...types.organizations.role_list_response import RoleListResponse
 
-__all__ = ["RolesResource", "AsyncRolesResource"]
+from ..._base_client import make_request_options
 
+from ..._types import NotGiven
+
+from ..._response import to_raw_response_wrapper, async_to_raw_response_wrapper, to_streamed_response_wrapper, async_to_streamed_response_wrapper
+
+from typing_extensions import Literal, overload
+from ..._types import Timeout, Headers, NotGiven, not_given, Omit, omit, NoneType, Query, Body
+
+__all__ = ["RolesResource", "AsyncRolesResource"]
 
 class RolesResource(SyncAPIResource):
     @cached_property
@@ -40,17 +43,15 @@ class RolesResource(SyncAPIResource):
         """
         return RolesResourceWithStreamingResponse(self)
 
-    def list(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RoleListResponse:
+    def list(self,
+    organization_id: str,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> RoleListResponse:
         """
         List all roles in an organization.
 
@@ -64,15 +65,14 @@ class RolesResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         return self._get(
             path_template("/api/v1/organizations/{organization_id}/roles", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=RoleListResponse,
         )
-
 
 class AsyncRolesResource(AsyncAPIResource):
     @cached_property
@@ -94,17 +94,15 @@ class AsyncRolesResource(AsyncAPIResource):
         """
         return AsyncRolesResourceWithStreamingResponse(self)
 
-    async def list(
-        self,
-        organization_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> RoleListResponse:
+    async def list(self,
+    organization_id: str,
+    *,
+    # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+    # The extra values given here take precedence over values defined on the client or passed to this method.
+    extra_headers: Headers | None = None,
+    extra_query: Query | None = None,
+    extra_body: Body | None = None,
+    timeout: float | httpx.Timeout | None | NotGiven = not_given,) -> RoleListResponse:
         """
         List all roles in an organization.
 
@@ -118,15 +116,14 @@ class AsyncRolesResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         if not organization_id:
-            raise ValueError(f"Expected a non-empty value for `organization_id` but received {organization_id!r}")
+          raise ValueError(
+            f'Expected a non-empty value for `organization_id` but received {organization_id!r}'
+          )
         return await self._get(
             path_template("/api/v1/organizations/{organization_id}/roles", organization_id=organization_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
+            options=make_request_options(extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout),
             cast_to=RoleListResponse,
         )
-
 
 class RolesResourceWithRawResponse:
     def __init__(self, roles: RolesResource) -> None:
@@ -136,7 +133,6 @@ class RolesResourceWithRawResponse:
             roles.list,
         )
 
-
 class AsyncRolesResourceWithRawResponse:
     def __init__(self, roles: AsyncRolesResource) -> None:
         self._roles = roles
@@ -145,7 +141,6 @@ class AsyncRolesResourceWithRawResponse:
             roles.list,
         )
 
-
 class RolesResourceWithStreamingResponse:
     def __init__(self, roles: RolesResource) -> None:
         self._roles = roles
@@ -153,7 +148,6 @@ class RolesResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             roles.list,
         )
-
 
 class AsyncRolesResourceWithStreamingResponse:
     def __init__(self, roles: AsyncRolesResource) -> None:
