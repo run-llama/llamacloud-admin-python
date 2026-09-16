@@ -228,6 +228,7 @@ class UsersResource(SyncAPIResource):
             cast_to=UserOrganizationRole,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def list_members(
         self,
         organization_id: str,
@@ -241,6 +242,10 @@ class UsersResource(SyncAPIResource):
     ) -> UserListMembersResponse:
         """
         Get all users in an organization.
+
+        Deprecated: use `GET /api/v2/organizations/{organization_id}/users`, which is
+        paginated. This one collapses grants to members in memory after reading up to
+        10,000 of them, so a large organization silently loses members.
 
         Args:
           extra_headers: Send extra headers
@@ -550,6 +555,7 @@ class AsyncUsersResource(AsyncAPIResource):
             cast_to=UserOrganizationRole,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def list_members(
         self,
         organization_id: str,
@@ -563,6 +569,10 @@ class AsyncUsersResource(AsyncAPIResource):
     ) -> UserListMembersResponse:
         """
         Get all users in an organization.
+
+        Deprecated: use `GET /api/v2/organizations/{organization_id}/users`, which is
+        paginated. This one collapses grants to members in memory after reading up to
+        10,000 of them, so a large organization silently loses members.
 
         Args:
           extra_headers: Send extra headers
@@ -689,8 +699,10 @@ class UsersResourceWithRawResponse:
         self.assign_role = to_raw_response_wrapper(
             users.assign_role,
         )
-        self.list_members = to_raw_response_wrapper(
-            users.list_members,
+        self.list_members = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                users.list_members,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_projects = (  # pyright: ignore[reportDeprecated]
             to_raw_response_wrapper(
@@ -718,8 +730,10 @@ class AsyncUsersResourceWithRawResponse:
         self.assign_role = async_to_raw_response_wrapper(
             users.assign_role,
         )
-        self.list_members = async_to_raw_response_wrapper(
-            users.list_members,
+        self.list_members = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                users.list_members,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_projects = (  # pyright: ignore[reportDeprecated]
             async_to_raw_response_wrapper(
@@ -747,8 +761,10 @@ class UsersResourceWithStreamingResponse:
         self.assign_role = to_streamed_response_wrapper(
             users.assign_role,
         )
-        self.list_members = to_streamed_response_wrapper(
-            users.list_members,
+        self.list_members = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                users.list_members,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_projects = (  # pyright: ignore[reportDeprecated]
             to_streamed_response_wrapper(
@@ -776,8 +792,10 @@ class AsyncUsersResourceWithStreamingResponse:
         self.assign_role = async_to_streamed_response_wrapper(
             users.assign_role,
         )
-        self.list_members = async_to_streamed_response_wrapper(
-            users.list_members,
+        self.list_members = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                users.list_members,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_projects = (  # pyright: ignore[reportDeprecated]
             async_to_streamed_response_wrapper(
