@@ -9,7 +9,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import api_key_list_params, api_key_create_params
-from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -22,6 +22,7 @@ from .._response import (
 from ..pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.api_key import APIKey
+from ..types.api_key_delete_response import APIKeyDeleteResponse
 
 __all__ = ["APIKeysResource", "AsyncAPIKeysResource"]
 
@@ -164,7 +165,7 @@ class APIKeysResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
+    ) -> APIKeyDeleteResponse:
         """
         Revoke an API key.
 
@@ -184,13 +185,12 @@ class APIKeysResource(SyncAPIResource):
         """
         if not api_key_id:
             raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
             path_template("/api/v1/beta/api-keys/{api_key_id}", api_key_id=api_key_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=APIKeyDeleteResponse,
         )
 
 
@@ -332,7 +332,7 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
+    ) -> APIKeyDeleteResponse:
         """
         Revoke an API key.
 
@@ -352,13 +352,12 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         """
         if not api_key_id:
             raise ValueError(f"Expected a non-empty value for `api_key_id` but received {api_key_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
             path_template("/api/v1/beta/api-keys/{api_key_id}", api_key_id=api_key_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=APIKeyDeleteResponse,
         )
 
 

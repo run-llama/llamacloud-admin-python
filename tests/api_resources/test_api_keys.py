@@ -9,7 +9,7 @@ import pytest
 
 from tests.utils import assert_matches_type
 from llama_cloud_admin import LlamaCloudAdmin, AsyncLlamaCloudAdmin
-from llama_cloud_admin.types import APIKey
+from llama_cloud_admin.types import APIKey, APIKeyDeleteResponse
 from llama_cloud_admin._utils import parse_datetime
 from llama_cloud_admin.pagination import SyncPaginatedCursor, AsyncPaginatedCursor
 
@@ -105,7 +105,7 @@ class TestAPIKeys:
         api_key = client.api_keys.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert api_key is None
+        assert_matches_type(APIKeyDeleteResponse, api_key, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -117,7 +117,7 @@ class TestAPIKeys:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         api_key = response.parse()
-        assert api_key is None
+        assert_matches_type(APIKeyDeleteResponse, api_key, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -129,7 +129,7 @@ class TestAPIKeys:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             api_key = response.parse()
-            assert api_key is None
+            assert_matches_type(APIKeyDeleteResponse, api_key, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -233,7 +233,7 @@ class TestAsyncAPIKeys:
         api_key = await async_client.api_keys.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert api_key is None
+        assert_matches_type(APIKeyDeleteResponse, api_key, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -245,7 +245,7 @@ class TestAsyncAPIKeys:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         api_key = await response.parse()
-        assert api_key is None
+        assert_matches_type(APIKeyDeleteResponse, api_key, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -257,7 +257,7 @@ class TestAsyncAPIKeys:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             api_key = await response.parse()
-            assert api_key is None
+            assert_matches_type(APIKeyDeleteResponse, api_key, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
