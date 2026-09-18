@@ -90,14 +90,14 @@ Methods:
 Types:
 
 ```python
-from llama_cloud_admin.types import APIKey
+from llama_cloud_admin.types import APIKey, APIKeyDeleteResponse
 ```
 
 Methods:
 
 - <code title="post /api/v1/beta/api-keys">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">create</a>(\*\*<a href="src/llama_cloud_admin/types/api_key_create_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/api_key.py">APIKey</a></code>
 - <code title="get /api/v1/beta/api-keys">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">list</a>(\*\*<a href="src/llama_cloud_admin/types/api_key_list_params.py">params</a>) -> <a href="./src/llama_cloud_admin/types/api_key.py">SyncPaginatedCursor[APIKey]</a></code>
-- <code title="delete /api/v1/beta/api-keys/{api_key_id}">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">delete</a>(api_key_id) -> None</code>
+- <code title="delete /api/v1/beta/api-keys/{api_key_id}">client.api_keys.<a href="./src/llama_cloud_admin/resources/api_keys.py">delete</a>(api_key_id) -> <a href="./src/llama_cloud_admin/types/api_key_delete_response.py">APIKeyDeleteResponse</a></code>
 
 # QuotaManagement
 
