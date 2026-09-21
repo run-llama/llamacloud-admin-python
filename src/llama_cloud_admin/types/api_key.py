@@ -37,5 +37,8 @@ class APIKey(BaseModel):
 
     project_id: Optional[str] = None
 
+    role: Optional[Literal["admin", "agent_viewer", "viewer", "viewer_v2"]] = None
+    """Role capping what this key may do. Null if the key authorizes as its owner."""
+
     updated_at: Optional[datetime] = None
     """Update datetime"""

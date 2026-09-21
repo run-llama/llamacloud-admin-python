@@ -33,6 +33,7 @@ class TestAPIKeys:
             key_type="agent",
             name="name",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            role="viewer_v2",
         )
         assert_matches_type(APIKey, api_key, path=["response"])
 
@@ -161,6 +162,7 @@ class TestAsyncAPIKeys:
             key_type="agent",
             name="name",
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            role="viewer_v2",
         )
         assert_matches_type(APIKey, api_key, path=["response"])
 
