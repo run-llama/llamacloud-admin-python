@@ -21,3 +21,10 @@ class APIKeyCreateParams(TypedDict, total=False):
 
     project_id: Optional[str]
     """The project ID to associate with the API key."""
+
+    role: Optional[Literal["admin", "agent_viewer", "viewer", "viewer_v2"]]
+    """Role capping what this key may do.
+
+    A key can only ever be narrower than the user who created it, never broader. If
+    not set, the key authorizes as its owner.
+    """

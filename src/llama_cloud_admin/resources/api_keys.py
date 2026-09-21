@@ -54,6 +54,7 @@ class APIKeysResource(SyncAPIResource):
         key_type: Literal["agent", "user"] | Omit = omit,
         name: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        role: Optional[Literal["admin", "agent_viewer", "viewer", "viewer_v2"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -75,6 +76,9 @@ class APIKeysResource(SyncAPIResource):
 
           project_id: The project ID to associate with the API key.
 
+          role: Role capping what this key may do. A key can only ever be narrower than the user
+              who created it, never broader. If not set, the key authorizes as its owner.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -91,6 +95,7 @@ class APIKeysResource(SyncAPIResource):
                     "key_type": key_type,
                     "name": name,
                     "project_id": project_id,
+                    "role": role,
                 },
                 api_key_create_params.APIKeyCreateParams,
             ),
@@ -221,6 +226,7 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         key_type: Literal["agent", "user"] | Omit = omit,
         name: Optional[str] | Omit = omit,
         project_id: Optional[str] | Omit = omit,
+        role: Optional[Literal["admin", "agent_viewer", "viewer", "viewer_v2"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -242,6 +248,9 @@ class AsyncAPIKeysResource(AsyncAPIResource):
 
           project_id: The project ID to associate with the API key.
 
+          role: Role capping what this key may do. A key can only ever be narrower than the user
+              who created it, never broader. If not set, the key authorizes as its owner.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -258,6 +267,7 @@ class AsyncAPIKeysResource(AsyncAPIResource):
                     "key_type": key_type,
                     "name": name,
                     "project_id": project_id,
+                    "role": role,
                 },
                 api_key_create_params.APIKeyCreateParams,
             ),
