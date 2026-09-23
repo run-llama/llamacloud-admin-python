@@ -186,6 +186,12 @@ class Usage(BaseModel):
 
     current_invoice_total_usd_cents: Optional[int] = None
 
+    pro_upgrade_offer_eligible: Optional[bool] = None
+    """Whether upgrading to Pro now would earn the one-time Pro bonus credits.
+
+    Only computed when requested with include=offers.
+    """
+
     total_users: Optional[int] = None
 
 
