@@ -181,6 +181,7 @@ class UsersResource(SyncAPIResource):
         body_organization_id: str,
         role_id: str,
         user_id: str,
+        project_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -189,7 +190,8 @@ class UsersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserOrganizationRole:
         """
-        Assign a role to a user in an organization.
+        Assign a role to a user in an organization, optionally limited to some of its
+        projects.
 
         Args:
           body_organization_id: The organization's ID.
@@ -197,6 +199,9 @@ class UsersResource(SyncAPIResource):
           role_id: The role's ID.
 
           user_id: The user's ID.
+
+          project_ids: Projects to limit the role to. Empty: organization-wide, per-project roles
+              removed. Omitted: organization-wide, per-project roles kept.
 
           extra_headers: Send extra headers
 
@@ -219,6 +224,7 @@ class UsersResource(SyncAPIResource):
                     "body_organization_id": body_organization_id,
                     "role_id": role_id,
                     "user_id": user_id,
+                    "project_ids": project_ids,
                 },
                 user_assign_role_params.UserAssignRoleParams,
             ),
@@ -508,6 +514,7 @@ class AsyncUsersResource(AsyncAPIResource):
         body_organization_id: str,
         role_id: str,
         user_id: str,
+        project_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -516,7 +523,8 @@ class AsyncUsersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UserOrganizationRole:
         """
-        Assign a role to a user in an organization.
+        Assign a role to a user in an organization, optionally limited to some of its
+        projects.
 
         Args:
           body_organization_id: The organization's ID.
@@ -524,6 +532,9 @@ class AsyncUsersResource(AsyncAPIResource):
           role_id: The role's ID.
 
           user_id: The user's ID.
+
+          project_ids: Projects to limit the role to. Empty: organization-wide, per-project roles
+              removed. Omitted: organization-wide, per-project roles kept.
 
           extra_headers: Send extra headers
 
@@ -546,6 +557,7 @@ class AsyncUsersResource(AsyncAPIResource):
                     "body_organization_id": body_organization_id,
                     "role_id": role_id,
                     "user_id": user_id,
+                    "project_ids": project_ids,
                 },
                 user_assign_role_params.UserAssignRoleParams,
             ),
