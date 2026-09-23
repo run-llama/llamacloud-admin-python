@@ -237,6 +237,7 @@ class TestOrganizations:
         organization = client.organizations.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             get_current_invoice_total=True,
+            include=["offers"],
         )
         assert_matches_type(UsageAndPlan, organization, path=["response"])
 
@@ -496,6 +497,7 @@ class TestAsyncOrganizations:
         organization = await async_client.organizations.get_usage(
             organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             get_current_invoice_total=True,
+            include=["offers"],
         )
         assert_matches_type(UsageAndPlan, organization, path=["response"])
 

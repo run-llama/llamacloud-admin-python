@@ -207,6 +207,18 @@ class TestUsers:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_assign_role_with_all_params(self, client: LlamaCloudAdmin) -> None:
+        user = client.organizations.users.assign_role(
+            path_organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body_organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            role_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            user_id="user_id",
+            project_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
+        )
+        assert_matches_type(UserOrganizationRole, user, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_assign_role(self, client: LlamaCloudAdmin) -> None:
         response = client.organizations.users.with_raw_response.assign_role(
             path_organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
@@ -600,6 +612,18 @@ class TestAsyncUsers:
             body_organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             role_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             user_id="user_id",
+        )
+        assert_matches_type(UserOrganizationRole, user, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_assign_role_with_all_params(self, async_client: AsyncLlamaCloudAdmin) -> None:
+        user = await async_client.organizations.users.assign_role(
+            path_organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            body_organization_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            role_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            user_id="user_id",
+            project_ids=["182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"],
         )
         assert_matches_type(UserOrganizationRole, user, path=["response"])
 
