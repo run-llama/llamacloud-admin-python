@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import List, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -262,6 +263,7 @@ class OrganizationsResource(SyncAPIResource):
         organization_id: str,
         *,
         get_current_invoice_total: bool | Omit = omit,
+        include: List[Literal["offers"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -269,8 +271,10 @@ class OrganizationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UsageAndPlan:
-        """
-        Get usage for a specific organization.
+        """Get usage for a specific organization.
+
+        Pass `include=offers` to also compute
+        upgrade-offer eligibility.
 
         Args:
           extra_headers: Send extra headers
@@ -291,7 +295,10 @@ class OrganizationsResource(SyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=maybe_transform(
-                    {"get_current_invoice_total": get_current_invoice_total},
+                    {
+                        "get_current_invoice_total": get_current_invoice_total,
+                        "include": include,
+                    },
                     organization_get_usage_params.OrganizationGetUsageParams,
                 ),
             ),
@@ -515,6 +522,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         organization_id: str,
         *,
         get_current_invoice_total: bool | Omit = omit,
+        include: List[Literal["offers"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -522,8 +530,10 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> UsageAndPlan:
-        """
-        Get usage for a specific organization.
+        """Get usage for a specific organization.
+
+        Pass `include=offers` to also compute
+        upgrade-offer eligibility.
 
         Args:
           extra_headers: Send extra headers
@@ -544,7 +554,10 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"get_current_invoice_total": get_current_invoice_total},
+                    {
+                        "get_current_invoice_total": get_current_invoice_total,
+                        "include": include,
+                    },
                     organization_get_usage_params.OrganizationGetUsageParams,
                 ),
             ),
