@@ -124,6 +124,7 @@ class Plan(BaseModel):
         "free_v1",
         "free_v2",
         "llama_parse",
+        "payg_v1",
         "pro",
         "pro_v1",
         "pro_v2",
