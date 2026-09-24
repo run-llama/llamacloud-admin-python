@@ -124,6 +124,7 @@ class Plan(BaseModel):
         "free_v1",
         "free_v2",
         "llama_parse",
+        "payg_v1",
         "pro",
         "pro_v1",
         "pro_v2",
@@ -172,10 +173,12 @@ class Usage(BaseModel):
     active_alerts: Optional[
         List[
             Literal[
+                "auto_reload_failed",
                 "configured_spend_limit_exceeded",
                 "free_credits_exhausted",
                 "has_spending_alert",
                 "internal_spending_alert",
+                "low_balance",
                 "plan_spend_limit_exceeded",
                 "plan_spend_limit_soft_alert",
             ]
