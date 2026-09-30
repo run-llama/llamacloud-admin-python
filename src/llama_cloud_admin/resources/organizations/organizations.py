@@ -79,6 +79,7 @@ class OrganizationsResource(SyncAPIResource):
         self,
         *,
         name: str,
+        create_default_project: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -92,6 +93,8 @@ class OrganizationsResource(SyncAPIResource):
         Args:
           name: The organization's display name.
 
+          create_default_project: Also create the organization's default project.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -102,7 +105,13 @@ class OrganizationsResource(SyncAPIResource):
         """
         return self._post(
             "/api/v2/organizations",
-            body=maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
+            body=maybe_transform(
+                {
+                    "name": name,
+                    "create_default_project": create_default_project,
+                },
+                organization_create_params.OrganizationCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -338,6 +347,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         self,
         *,
         name: str,
+        create_default_project: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -351,6 +361,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         Args:
           name: The organization's display name.
 
+          create_default_project: Also create the organization's default project.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -361,7 +373,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """
         return await self._post(
             "/api/v2/organizations",
-            body=await async_maybe_transform({"name": name}, organization_create_params.OrganizationCreateParams),
+            body=await async_maybe_transform(
+                {
+                    "name": name,
+                    "create_default_project": create_default_project,
+                },
+                organization_create_params.OrganizationCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
