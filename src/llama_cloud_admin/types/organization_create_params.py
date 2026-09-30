@@ -10,3 +10,6 @@ __all__ = ["OrganizationCreateParams"]
 class OrganizationCreateParams(TypedDict, total=False):
     name: Required[str]
     """The organization's display name."""
+
+    create_default_project: bool
+    """Also create the organization's default project."""

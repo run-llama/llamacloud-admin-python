@@ -31,6 +31,15 @@ class TestOrganizations:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_create_with_all_params(self, client: LlamaCloudAdmin) -> None:
+        organization = client.organizations.create(
+            name="x",
+            create_default_project=True,
+        )
+        assert_matches_type(Organization, organization, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_create(self, client: LlamaCloudAdmin) -> None:
         response = client.organizations.with_raw_response.create(
             name="x",
@@ -286,6 +295,15 @@ class TestAsyncOrganizations:
     async def test_method_create(self, async_client: AsyncLlamaCloudAdmin) -> None:
         organization = await async_client.organizations.create(
             name="x",
+        )
+        assert_matches_type(Organization, organization, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncLlamaCloudAdmin) -> None:
+        organization = await async_client.organizations.create(
+            name="x",
+            create_default_project=True,
         )
         assert_matches_type(Organization, organization, path=["response"])
 
