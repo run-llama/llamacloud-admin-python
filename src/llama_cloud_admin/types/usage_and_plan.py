@@ -173,6 +173,7 @@ class Usage(BaseModel):
     active_alerts: Optional[
         List[
             Literal[
+                "auto_reload_cap_reached",
                 "auto_reload_failed",
                 "configured_spend_limit_exceeded",
                 "free_credits_exhausted",
