@@ -34,6 +34,7 @@ class UsageMetricAggregateParams(TypedDict, total=False):
                 "directory_files_exported",
                 "directory_files_ingested",
                 "directory_pages_exported",
+                "extraction_effort_max_credits",
                 "extraction_num_pages",
                 "form_parsing_pages",
                 "image_classified",
