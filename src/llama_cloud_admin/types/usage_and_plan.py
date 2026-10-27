@@ -11,6 +11,7 @@ __all__ = [
     "Plan",
     "PlanLimits",
     "PlanCurrentBillingPeriod",
+    "PlanPaymentFailure",
     "PlanRecurringCredit",
     "PlanRecurringCreditCreditType",
     "Usage",
@@ -84,6 +85,16 @@ class PlanCurrentBillingPeriod(BaseModel):
     start_date: datetime
 
 
+class PlanPaymentFailure(BaseModel):
+    """One active payment failure on the organization's record."""
+
+    failed_at: datetime
+    """When the failure was recorded, in UTC"""
+
+    invoice_id: Optional[str] = None
+    """The Stripe invoice whose payment failed. Null when the record has none."""
+
+
 class PlanRecurringCreditCreditType(BaseModel):
     id: str
 
@@ -150,6 +161,12 @@ class Plan(BaseModel):
 
     is_payment_failed: Optional[bool] = None
     """Whether the organization has a failed payment that requires support contact"""
+
+    payment_failures: Optional[List[PlanPaymentFailure]] = None
+    """
+    The newest active payment failures, newest first, at most 10; failure_count
+    counts all of them. Only set when requested with include=payment_failures.
+    """
 
     recurring_credits: Optional[List[PlanRecurringCredit]] = None
 

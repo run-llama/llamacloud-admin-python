@@ -272,7 +272,7 @@ class OrganizationsResource(SyncAPIResource):
         organization_id: str,
         *,
         get_current_invoice_total: bool | Omit = omit,
-        include: List[Literal["offers"]] | Omit = omit,
+        include: List[Literal["offers", "payment_failures"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -283,7 +283,8 @@ class OrganizationsResource(SyncAPIResource):
         """Get usage for a specific organization.
 
         Pass `include=offers` to also compute
-        upgrade-offer eligibility.
+        upgrade-offer eligibility, and `include=payment_failures` to also list the
+        plan's newest active payment failures.
 
         Args:
           extra_headers: Send extra headers
@@ -540,7 +541,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         organization_id: str,
         *,
         get_current_invoice_total: bool | Omit = omit,
-        include: List[Literal["offers"]] | Omit = omit,
+        include: List[Literal["offers", "payment_failures"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -551,7 +552,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         """Get usage for a specific organization.
 
         Pass `include=offers` to also compute
-        upgrade-offer eligibility.
+        upgrade-offer eligibility, and `include=payment_failures` to also list the
+        plan's newest active payment failures.
 
         Args:
           extra_headers: Send extra headers
