@@ -11,4 +11,4 @@ __all__ = ["OrganizationGetUsageParams"]
 class OrganizationGetUsageParams(TypedDict, total=False):
     get_current_invoice_total: bool
 
-    include: List[Literal["offers"]]
+    include: List[Literal["offers", "payment_failures"]]
