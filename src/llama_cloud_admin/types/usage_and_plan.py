@@ -150,6 +150,12 @@ class Plan(BaseModel):
     id: Optional[str] = None
     """The ID of the plan in Metronome"""
 
+    credit_pack_rate_usd_cents_per_1k: Optional[float] = None
+    """
+    US cents per 1,000 credits this organization pays for credit packs and
+    auto-reloads now. Null when the plan buys no credits (Enterprise).
+    """
+
     current_billing_period: Optional[PlanCurrentBillingPeriod] = None
     """The current billing period"""
 
