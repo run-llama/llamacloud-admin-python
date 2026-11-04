@@ -53,6 +53,7 @@ class QuotaManagementListParams(TypedDict, total=False):
             "rate_limit_extract_api_list",
             "rate_limit_extract_api_query",
             "rate_limit_extract_concurrent_default",
+            "rate_limit_extract_review_api",
             "rate_limit_file_api_read",
             "rate_limit_file_api_write",
             "rate_limit_index_v1_pipeline_concurrent_jobs",
