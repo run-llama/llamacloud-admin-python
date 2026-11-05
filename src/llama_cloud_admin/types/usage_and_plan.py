@@ -139,6 +139,7 @@ class Plan(BaseModel):
         "pro",
         "pro_v1",
         "pro_v2",
+        "sales_led_v1",
         "starter_v1",
         "starter_v2",
         "unknown",
