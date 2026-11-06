@@ -166,6 +166,12 @@ class Plan(BaseModel):
     failure_count: Optional[int] = None
     """The number of payment failures for this organization"""
 
+    is_fallback: Optional[bool] = None
+    """
+    Whether the organization's plan failed to load; if so, the other fields hold the
+    default plan.
+    """
+
     is_payment_failed: Optional[bool] = None
     """Whether the organization has a failed payment that requires support contact"""
 
