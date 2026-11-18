@@ -121,7 +121,7 @@ class TestOrganizations:
     def test_method_list_with_all_params(self, client: LlamaCloudAdmin) -> None:
         organization = client.organizations.list(
             name="name",
-            page_size=0,
+            page_size=1,
             page_token="page_token",
         )
         assert_matches_type(SyncPaginatedCursor[Organization], organization, path=["response"])
@@ -390,7 +390,7 @@ class TestAsyncOrganizations:
     async def test_method_list_with_all_params(self, async_client: AsyncLlamaCloudAdmin) -> None:
         organization = await async_client.organizations.list(
             name="name",
-            page_size=0,
+            page_size=1,
             page_token="page_token",
         )
         assert_matches_type(AsyncPaginatedCursor[Organization], organization, path=["response"])
