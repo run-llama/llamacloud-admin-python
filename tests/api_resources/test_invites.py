@@ -112,7 +112,7 @@ class TestInvites:
     @parametrize
     def test_method_list_mine_with_all_params(self, client: LlamaCloudAdmin) -> None:
         invite = client.invites.list_mine(
-            page_size=0,
+            page_size=1,
             page_token="page_token",
         )
         assert_matches_type(SyncPaginatedCursor[Invite], invite, path=["response"])
@@ -239,7 +239,7 @@ class TestAsyncInvites:
     @parametrize
     async def test_method_list_mine_with_all_params(self, async_client: AsyncLlamaCloudAdmin) -> None:
         invite = await async_client.invites.list_mine(
-            page_size=0,
+            page_size=1,
             page_token="page_token",
         )
         assert_matches_type(AsyncPaginatedCursor[Invite], invite, path=["response"])
