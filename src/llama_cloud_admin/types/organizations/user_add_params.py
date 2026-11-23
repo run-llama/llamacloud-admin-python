@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 from ..._types import SequenceNotStr
 
@@ -22,6 +22,9 @@ class Body(TypedDict, total=False):
 
     email: Optional[str]
     """The user's email address."""
+
+    role: Optional[Literal["admin", "viewer_v2"]]
+    """The role to give the user, by name. Set this or `role_id`, not both."""
 
     role_id: Optional[str]
     """The role ID to assign to the user."""
