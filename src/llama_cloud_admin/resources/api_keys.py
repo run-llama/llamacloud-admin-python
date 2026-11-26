@@ -67,8 +67,9 @@ class APIKeysResource(SyncAPIResource):
 
         Scope it to a project with `project_id`, which requires read access to that
         project; omit it for a key that reaches every project you can read. A
-        project-scoped or agent key cannot create an API key. The response carries the
-        secret in `redacted_api_key`, and only this once.
+        project-scoped or agent key cannot create an API key. An unscoped key can create
+        only project keys, with its own role and expiring no later than it does. The
+        response carries the secret in `redacted_api_key`, and only this once.
 
         Args:
           expires_at: When the API key should expire. If not set, the key never expires.
@@ -238,8 +239,9 @@ class AsyncAPIKeysResource(AsyncAPIResource):
 
         Scope it to a project with `project_id`, which requires read access to that
         project; omit it for a key that reaches every project you can read. A
-        project-scoped or agent key cannot create an API key. The response carries the
-        secret in `redacted_api_key`, and only this once.
+        project-scoped or agent key cannot create an API key. An unscoped key can create
+        only project keys, with its own role and expiring no later than it does. The
+        response carries the secret in `redacted_api_key`, and only this once.
 
         Args:
           expires_at: When the API key should expire. If not set, the key never expires.
